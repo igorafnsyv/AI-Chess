@@ -26,7 +26,7 @@ public class Queen extends Piece{
         return result;
     }
 
-    private boolean canReach(Position start, Position destination) {
+    public boolean canReach(Position start, Position destination) {
         return start.distanceTo(destination) != -1;
 
     }
@@ -40,15 +40,15 @@ public class Queen extends Piece{
         char destinationCol = position2.charAt(0);
         char destinationRow = position2.charAt(1);
 
-        int colStep = 0;
-        int rowStep = 0;
+        int colStep = 1;
+        int rowStep = 1;
 
         if (startCol == destinationCol) {
-            rowStep = 1;
+            colStep = 0;
         }
 
         if (startRow == destinationRow) {
-            colStep = 1;
+            rowStep = 0;
         }
 
         for (int i = 0; i < start.distanceTo(destination) - 1; i++) {

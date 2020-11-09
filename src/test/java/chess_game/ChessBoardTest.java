@@ -1,5 +1,7 @@
 package chess_game;
 
+import chess_game.chess_pieces.King;
+import chess_game.chess_pieces.Queen;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -29,6 +31,8 @@ public class ChessBoardTest {
         ChessBoard board = ChessBoard.initializeBoard();
         assertNull(board.getPosition("H9"));
     }
+    
+
 
 
 }

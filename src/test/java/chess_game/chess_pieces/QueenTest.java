@@ -108,6 +108,27 @@ public class QueenTest {
         assertFalse(queen.canMoveTo(start, end, board));
     }
 
+    @Test
+    public void testCanMoveToDiagonalUp() {
+        Queen queen = new Queen(false);
+        ChessBoard board = ChessBoard.initializeBoard();
+        Position start = board.getPosition("A1");
+        start.setPiece(queen);
+        Position end = board.getPosition("D4");
+        assertTrue(queen.canMoveTo(start, end, board));
+
+    }
+
+    @Test
+    public void testCanMoveDiagonalDown() {
+        Queen queen = new Queen(false);
+        ChessBoard board = ChessBoard.initializeBoard();
+        Position start = board.getPosition("D4");
+        start.setPiece(queen);
+        Position end = board.getPosition("A1");
+        assertTrue(queen.canMoveTo(start, end, board));
+    }
+
 
 
 

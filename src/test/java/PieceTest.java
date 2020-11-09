@@ -61,8 +61,7 @@ public class PieceTest {
         Position start = new Position("A1");
         Position destination = new Position("A2");
         Piece piece = new King(false);
-
-        assertFalse(piece.canMoveTo(start, destination, null));
+        assertThrows(NullPointerException.class,() -> piece.canMoveTo(start, destination, null));
     }
 
     @Test

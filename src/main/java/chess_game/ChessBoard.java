@@ -5,6 +5,12 @@ import java.util.*;
 
 public class ChessBoard {
     private Map<String, Position> board;
+    private Position whiteKingPosition;
+    private Position blackKingPosition;
+
+    public static ChessBoard initializeBoard() {
+        return new ChessBoard();
+    }
 
     private ChessBoard() {
         board = new HashMap<>();
@@ -20,12 +26,26 @@ public class ChessBoard {
         return board.get(position);
     }
 
+    public void setWhiteKingPosition(Position whiteKingPosition) {
+        this.whiteKingPosition = whiteKingPosition;
+    }
+
+    public Position getWhiteKingPosition() {
+        return whiteKingPosition;
+    }
+
+    public void setBlackKingPosition(Position blackKingPosition) {
+        this.blackKingPosition = blackKingPosition;
+    }
+
+    public Position getBlackKingPosition() {
+        return blackKingPosition;
+    }
+
     public int size() {
         return board.size();
     }
 
-    public static ChessBoard initializeBoard() {
-        return new ChessBoard();
-    }
+
 
 }
