@@ -8,7 +8,6 @@ import chess_game.Position;
 
 public class King extends Piece {
 
-    private boolean checked = false;
 
     public King(boolean white) {
         super(white);
@@ -88,7 +87,6 @@ public class King extends Piece {
             currentColumn++;
         }
 
-        this.checked = false;
         return false;
     }
 

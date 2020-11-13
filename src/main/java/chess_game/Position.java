@@ -59,6 +59,15 @@ public class Position {
         //Diagonal move
         if (rowDistance == colDistance) return  rowDistance;
         return -1;
+
+    }
+
+    public boolean sameColumn(Position pos) {
+        return this.position.charAt(1) == pos.position.charAt(1);
+    }
+
+    public boolean sameRow(Position pos) {
+        return this.position.charAt(0) == pos.position.charAt(0);
     }
 
     @Override

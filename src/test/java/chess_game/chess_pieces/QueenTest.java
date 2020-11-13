@@ -129,6 +129,38 @@ public class QueenTest {
         assertTrue(queen.canMoveTo(start, end, board));
     }
 
+    @Test
+    public void testCanMoveToRight() {
+        Queen queen = new Queen(false);
+        ChessBoard board = ChessBoard.initializeBoard();
+        Position start = board.getPosition("A1");
+        start.setPiece(queen);
+        Position end = board.getPosition("B1");
+        assertTrue(queen.canMoveTo(start, end, board));
+    }
+
+    @Test
+    public void testAllBetweenPositionFreeLeft() {
+        Queen queen = new Queen(false);
+        ChessBoard board = ChessBoard.initializeBoard();
+        Position start = board.getPosition("H1");
+        start.setPiece(queen);
+        Position end = board.getPosition("A1");
+        assertTrue(queen.allBetweenPositionsFree(start, end, board));
+    }
+
+    @Test
+    public void testAllBetweenPositionFreeBelow() {
+        Queen queen = new Queen(false);
+        ChessBoard board = ChessBoard.initializeBoard();
+        Position start = board.getPosition("A3");
+        start.setPiece(queen);
+        Position end = board.getPosition("A2");
+        assertTrue(queen.allBetweenPositionsFree(start, end, board));
+    }
+
+
+
 
 
 

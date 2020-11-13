@@ -3,35 +3,27 @@ package chess_game.chess_pieces;
 import chess_game.ChessBoard;
 import chess_game.Position;
 
-public class Queen extends Piece{
+public class Rook extends Piece {
 
-    public Queen(boolean white) {
+    public Rook(boolean white) {
         super(white);
     }
 
-
-    //TODO: need to check how to attack king
     @Override
     public boolean canMoveTo(Position start, Position destination, ChessBoard board) {
         if (start.getPiece() != this) return false;
-        if (!canReach(start, destination)) return false;
+        // Rook can move only vertically, horizontally
+        if (!(start.sameColumn(destination) || start.sameRow(destination))) return false;
         if (!allBetweenPositionsFree(start, destination, board)) return false;
         boolean destinationFree = destination.getPiece() == null;
-        boolean result = destinationFree;
+        boolean result = true;
         if (!destinationFree) {
-            result = destination.getPiece().isWhite() != this.isWhite();
+            if (destination.getPiece().isWhite() == this.isWhite()) result = false;
         }
-
-
         return result;
     }
 
-    public boolean canReach(Position start, Position destination) {
-        return start.distanceTo(destination) != -1;
-
-    }
-
-    public boolean allBetweenPositionsFree(Position start, Position destination, ChessBoard board) {
+    private boolean allBetweenPositionsFree(Position start, Position destination, ChessBoard board) {
         String position1 = start.getPosition();
         char startCol = position1.charAt(0);
         char startRow = position1.charAt(1);
@@ -40,31 +32,29 @@ public class Queen extends Piece{
         char destinationCol = position2.charAt(0);
         char destinationRow = position2.charAt(1);
 
-        int colStep = 1;
-        int rowStep = 1;
+        int colStep = 0;
+        int rowStep = 0;
 
         if (startCol == destinationCol) {
-            colStep = 0;
+            rowStep = 1;
+        }
+        else if (startRow == destinationRow) {
+            colStep = 1;
         }
 
-        if (startRow == destinationRow) {
-            rowStep = 0;
-        }
-
-        if (startCol > destinationCol) {
-            colStep = -colStep;
-        }
-
+        // in this case we are moving left
         if (startRow > destinationRow) {
             rowStep = -rowStep;
         }
-
+        //or moving down
+        else if (startCol > destinationCol) {
+            colStep = -colStep;
+        }
 
         for (int i = 0; i < start.distanceTo(destination) - 1; i++) {
             Position position = board.getPosition(String.valueOf( startCol += colStep) + String.valueOf(startRow += rowStep));
             if (position.getPiece() != null) return false;
         }
-
         return true;
     }
 
