@@ -90,7 +90,7 @@ public class RookTest {
     }
 
     @Test
-    public void testRookCanMoveToTrueWhenPositionOccupiedBetween() {
+    public void testRookCanMoveToFalseWhenPositionOccupiedBetween() {
         Rook rook = new Rook(true);
         ChessBoard board = ChessBoard.initializeBoard();
         Position start = board.getPosition("H1");
