@@ -13,12 +13,20 @@ public class Rook extends Piece {
     public boolean canMoveTo(Position start, Position destination, ChessBoard board) {
         if (start.getPiece() != this) return false;
         // Rook can move only vertically, horizontally
-        if (!(start.sameColumn(destination) || start.sameRow(destination))) return false;
+        if (!canReach(start, destination)) return false;
         if (!allBetweenPositionsFree(start, destination, board)) return false;
         boolean destinationFree = destination.getPiece() == null;
         boolean result = true;
         if (!destinationFree) {
             if (destination.getPiece().isWhite() == this.isWhite()) result = false;
+        }
+        return result;
+    }
+
+    private boolean canReach(Position start, Position destination) {
+        boolean result = false;
+        if (start.columnDistanceTo(destination) != -1 || start.rowDistanceTo(destination) != -1) {
+            result  = true;
         }
         return result;
     }

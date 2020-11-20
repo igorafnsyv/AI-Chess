@@ -48,6 +48,7 @@ public class Position {
         return this.piece;
     }
 
+    //TODO: replace distanceTo usage with below
     public int distanceTo(Position destination) {
         int colDistance = Math.abs(position.charAt(0) - destination.position.charAt(0));
         int rowDistance = Math.abs(position.charAt(1) - destination.position.charAt(1));
