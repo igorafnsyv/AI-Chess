@@ -17,7 +17,7 @@ public class PawnTest {
     @Test
     public void testPawnCanMoveOneForward() {
         Pawn pawn = new Pawn(true);
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
         Position destination = board.getPosition("A2");
         start.setPiece(pawn);
@@ -27,7 +27,7 @@ public class PawnTest {
     @Test
     public void testPawnCanMoveToTwoForward(){
         Pawn pawn = new Pawn(true);
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
         Position destination = board.getPosition("A3");
         start.setPiece(pawn);
@@ -37,7 +37,7 @@ public class PawnTest {
     @Test
     public void testPawnCantMoveToMoreThanTwoForward() {
         Pawn pawn = new Pawn(true);
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
         Position destination = board.getPosition("A4");
         start.setPiece(pawn);
@@ -47,7 +47,7 @@ public class PawnTest {
     @Test
     public void testPawnCanMoveOneDiagonallyRightWhenEnemy() {
         Pawn pawn = new Pawn(true);
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
         Position destination = board.getPosition("B2");
         start.setPiece(pawn);
@@ -58,13 +58,25 @@ public class PawnTest {
     @Test
     public void testPawnCantMoveTwoForwardWhenEnemyBetween() {
         Pawn pawn = new Pawn(true);
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
         Position destination = board.getPosition("A3");
         Position middle = board.getPosition("A2");
         middle.setPiece(new Pawn(false));
         start.setPiece(pawn);
         assertFalse(pawn.canMoveTo(start, destination, board));
+    }
+
+    @Test
+    public void testToString() {
+        Pawn pawn = new Pawn(false);
+        assertEquals(pawn.toString(), "BP");
+    }
+
+    @Test
+    public void testToStringWhite() {
+        Pawn pawn = new Pawn(true);
+        assertEquals(pawn.toString(), "WP");
     }
 
 

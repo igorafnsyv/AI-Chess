@@ -21,4 +21,8 @@ public abstract class Piece {
         return white;
     }
 
+    @Override
+    public String toString() {
+        return isWhite() ? "W" : "B";
+    }
 }

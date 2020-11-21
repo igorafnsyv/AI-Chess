@@ -111,4 +111,10 @@ public class King extends Piece {
     private boolean canReach(Position start, Position destination) {
         return start.distanceTo(destination) == 1;
     }
+
+    @Override
+    public String toString() {
+        String color = super.toString();
+        return color + "K";
+    }
 }

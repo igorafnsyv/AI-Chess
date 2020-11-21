@@ -10,7 +10,7 @@ public class KingTest {
 
     @Test
     public void testIsCheckedFalseWhenSameColorQueenOnTheLeft() {
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
         board.getPosition("B1").setPiece(king);
         board.getPosition("A1").setPiece(new Queen(false));
@@ -20,7 +20,7 @@ public class KingTest {
 
     @Test
     public void testIsCheckedTrueWhenDifferentColorQueenOnTheLeft() {
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
         Queen queen = new Queen(true);
         Position kingPosition = board.getPosition("D1");
@@ -33,7 +33,7 @@ public class KingTest {
 
     @Test
     public void testIsCheckedTrueWhenDifferentColorQueenOnTheRight() {
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
         Queen queen = new Queen(true);
         Position kingPosition = board.getPosition("A1");
@@ -45,7 +45,7 @@ public class KingTest {
 
     @Test
     public void testIsCheckedWhenQueenBelow() {
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
         Queen queen = new Queen(true);
         Position kingPosition = board.getPosition("A5");
@@ -57,7 +57,7 @@ public class KingTest {
 
     @Test
     public void testIsCheckedWhenQueenAbove() {
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
         Queen queen = new Queen(true);
         Position kingPosition = board.getPosition("A1");
@@ -69,7 +69,7 @@ public class KingTest {
 
     @Test
     public void testIsCheckedLowerDiagonal() {
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
         Queen queen = new Queen(true);
         Position kingPosition = board.getPosition("C3");
@@ -81,7 +81,7 @@ public class KingTest {
 
     @Test
     public void testIsCheckedUpperDiagonal() {
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
         Queen queen = new Queen(true);
         Position kingPosition = board.getPosition("A1");
@@ -144,6 +144,18 @@ public class KingTest {
         start.setPiece(king);
         Position destination = new Position("C3");
         assertFalse(king.canMoveTo(start,destination, null));
+    }
+
+    @Test
+    public void testToString() {
+        King king = new King(false);
+        assertEquals(king.toString(), "BK");
+    }
+
+    @Test
+    public void testToStringWhite() {
+        King king = new King(true);
+        assertEquals(king.toString(), "WK");
     }
 
 

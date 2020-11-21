@@ -21,9 +21,13 @@ public class Queen extends Piece{
         if (!destinationFree) {
             result = destination.getPiece().isWhite() != this.isWhite();
         }
-
-
         return result;
+    }
+
+    @Override
+    public String toString() {
+        String color = super.toString();
+        return color + "Q";
     }
 
     public boolean canReach(Position start, Position destination) {

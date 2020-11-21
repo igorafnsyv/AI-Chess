@@ -23,7 +23,7 @@ public class QueenTest {
     @Test
     public void testCanGetToDestinationAllPositionFree() {
         Queen queen = new Queen(false);
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
         Position end = board.getPosition("A7");
         start.setPiece(queen);
@@ -34,7 +34,7 @@ public class QueenTest {
     @Test
     public void testCanGetToDestinationAllPositionFreeA1A2() {
         Queen queen = new Queen(false);
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
         Position end = board.getPosition("A2");
         start.setPiece(queen);
@@ -45,7 +45,7 @@ public class QueenTest {
     @Test
     public void testCanGetToDestinationAllPositionFreeColsMove() {
         Queen queen = new Queen(false);
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
         Position end = board.getPosition("H1");
         start.setPiece(queen);
@@ -56,7 +56,7 @@ public class QueenTest {
     @Test
     public void testAllOnePieceOnTheWay(){
         Queen queen = new Queen(false);
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         board.getPosition("D1").setPiece(new Queen(true));
         Position start = board.getPosition("A1");
         Position end = board.getPosition("H1");
@@ -67,7 +67,7 @@ public class QueenTest {
     @Test
     public void testCanMoveToEmpty() {
         Queen queen = new Queen(false);
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
         Position end = board.getPosition("H1");
         start.setPiece(queen);
@@ -77,7 +77,7 @@ public class QueenTest {
     @Test
     public void testCantMoveToOccupiedPositionSameColor() {
         Queen queen = new Queen(false);
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
         Position end = board.getPosition("H1");
         end.setPiece(new King(false));
@@ -89,7 +89,7 @@ public class QueenTest {
     @Test
     public void testCanMoveToOccupiedPositionDifferentColor() {
         Queen queen = new Queen(false);
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
         Position end = board.getPosition("H1");
         end.setPiece(new King(true));
@@ -100,7 +100,7 @@ public class QueenTest {
     @Test
     public void testCantMoveToDestinationPieceOnWay() {
         Queen queen = new Queen(false);
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
         Position end = board.getPosition("H1");
         board.getPosition("C1").setPiece(new King(false));
@@ -111,7 +111,7 @@ public class QueenTest {
     @Test
     public void testCanMoveToDiagonalUp() {
         Queen queen = new Queen(false);
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
         start.setPiece(queen);
         Position end = board.getPosition("D4");
@@ -122,7 +122,7 @@ public class QueenTest {
     @Test
     public void testCanMoveDiagonalDown() {
         Queen queen = new Queen(false);
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("D4");
         start.setPiece(queen);
         Position end = board.getPosition("A1");
@@ -132,7 +132,7 @@ public class QueenTest {
     @Test
     public void testCanMoveToRight() {
         Queen queen = new Queen(false);
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
         start.setPiece(queen);
         Position end = board.getPosition("B1");
@@ -142,7 +142,7 @@ public class QueenTest {
     @Test
     public void testAllBetweenPositionFreeLeft() {
         Queen queen = new Queen(false);
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("H1");
         start.setPiece(queen);
         Position end = board.getPosition("A1");
@@ -152,11 +152,23 @@ public class QueenTest {
     @Test
     public void testAllBetweenPositionFreeBelow() {
         Queen queen = new Queen(false);
-        ChessBoard board = ChessBoard.initializeBoard();
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A3");
         start.setPiece(queen);
         Position end = board.getPosition("A2");
         assertTrue(queen.allBetweenPositionsFree(start, end, board));
+    }
+
+    @Test
+    public void testToString() {
+        Queen queen = new Queen(false);
+        assertEquals(queen.toString(), "BQ");
+    }
+
+    @Test
+    public void testWhite() {
+        Queen queen = new Queen(true);
+        assertEquals(queen.toString(), "WQ");
     }
 
 

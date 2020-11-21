@@ -52,6 +52,7 @@ public class Bishop extends Piece {
 
     @Override
     public String toString() {
-        return "B";
+        String color = super.toString();
+        return color + "B";
     }
 }

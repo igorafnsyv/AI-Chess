@@ -23,6 +23,12 @@ public class Rook extends Piece {
         return result;
     }
 
+    @Override
+    public String toString() {
+        String color = super.toString();
+        return color + "R";
+    }
+
     private boolean canReach(Position start, Position destination) {
         boolean result = false;
         if (start.columnDistanceTo(destination) != -1 || start.rowDistanceTo(destination) != -1) {

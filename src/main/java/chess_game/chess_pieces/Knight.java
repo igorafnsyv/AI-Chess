@@ -21,6 +21,12 @@ public class Knight extends Piece {
         return result;
     }
 
+    @Override
+    public String toString() {
+        String color = super.toString();
+        return color + "N";
+    }
+
     private boolean canReach(Position start, Position destination) {
         char[] startChars = start.getPosition().toCharArray();
         char[] destinationChars= destination.getPosition().toCharArray();

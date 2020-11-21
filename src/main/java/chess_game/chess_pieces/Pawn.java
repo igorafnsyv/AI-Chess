@@ -13,6 +13,12 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public String toString() {
+        String color = super.toString();
+        return color + "P";
+    }
+
+    @Override
     public boolean canMoveTo(Position start, Position destination, ChessBoard board) {
         if (start.getPiece() != this) return false;
         if (!canReach(start, destination)) return false;
