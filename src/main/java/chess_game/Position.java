@@ -85,12 +85,14 @@ public class Position {
         return -1;
     }
 
+    //Column is letter
     public boolean sameColumn(Position pos) {
-        return this.position.charAt(1) == pos.position.charAt(1);
+        return this.position.charAt(0) == pos.position.charAt(0);
     }
 
+    //Row is number
     public boolean sameRow(Position pos) {
-        return this.position.charAt(0) == pos.position.charAt(0);
+        return this.position.charAt(1) == pos.position.charAt(1);
     }
 
     @Override
