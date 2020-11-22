@@ -185,5 +185,18 @@ public class PawnTest {
         assertEquals(pawn.toString(), "WP");
     }
 
+    @Test
+    public void testMoveTo() {
+        Pawn pawn = new Pawn(true);
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        Position start = board.getPosition("A2");
+        Position destination = board.getPosition("A4");
+        pawn.moveTo(start, destination);
+        assertEquals(pawn, destination.getPiece());
+        assertNull(start.getPiece());
+
+        System.out.println(board);
+    }
+
 
 }

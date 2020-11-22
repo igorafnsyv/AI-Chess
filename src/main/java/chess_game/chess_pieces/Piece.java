@@ -12,8 +12,12 @@ public abstract class Piece {
         this.white = white;
     }
 
+    public void moveTo(Position start, Position destination) {
+        start.setPiece(null);
+        destination.setPiece(this);
+    }
 
-    //TODO: make abstract
+
     public abstract boolean canMoveTo(Position start, Position destination, ChessBoard board);
 
 
