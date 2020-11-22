@@ -75,6 +75,7 @@ public class ChessBoard {
         for (char ch = 'A'; ch <= 'H'; ch++) {
             builder.append(ch);
             builder.append(" ");
+            builder.append(" ");
         }
 
         return builder.toString();

@@ -20,22 +20,27 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMoveTo(Position start, Position destination, ChessBoard board) {
+        if (start == destination) return false;
         if (start.getPiece() != this) return false;
         if (!canReach(start, destination)) return false;
         if (!allBetweenPositionsFree(start, destination, board)) return false;
         boolean result;
         //White pawn can only move up
         if (this.isWhite()) {
-            result = start.getPosition().compareTo(destination.getPosition()) <= -1;
+            result = start.getPosition().charAt(1) < destination.getPosition().charAt(1);
 
         //Black pawn can only move down
         } else {
-            result = start.getPosition().compareTo(destination.getPosition()) >= 1;
+            result = start.getPosition().charAt(1) > destination.getPosition().charAt(1);
         }
 
         //If it is a diagonal move, destination needs to contain piece of opposite color
         if (start.diagonalDistanceTo(destination) == 1) {
+            //No diagonal move when no enemy
+            if (destination.getPiece() == null) return false;
             result = result && (this.isWhite() != destination.getPiece().isWhite());
+        } else if (start.rowDistanceTo(destination) <= 2) {
+            result = result && destination.getPiece() == null;
         }
 
         return result;
