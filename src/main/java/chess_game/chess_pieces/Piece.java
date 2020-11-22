@@ -1,4 +1,4 @@
-package chess_game.chess_pieces;//TODO: make abstract
+package chess_game.chess_pieces;
 
 import chess_game.ChessBoard;
 import chess_game.Position;

@@ -13,6 +13,14 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public void moveTo(Position start, Position destination) {
+        super.moveTo(start, destination);
+        if (!madeFirstMove) {
+            madeFirstMove = true;
+        }
+    }
+
+    @Override
     public String toString() {
         String color = super.toString();
         return color + "P";

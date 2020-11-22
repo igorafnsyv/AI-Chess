@@ -195,7 +195,18 @@ public class PawnTest {
         assertEquals(pawn, destination.getPiece());
         assertNull(start.getPiece());
 
-        System.out.println(board);
+    }
+
+    @Test
+    public void testCantMoveTwoRowsAfterFirstMove() {
+        Pawn pawn = new Pawn(true);
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        Position start = board.getPosition("A2");
+        Position destination = board.getPosition("A3");
+        pawn.moveTo(start, destination);
+        start = destination;
+        destination = board.getPosition("A5");
+        assertFalse(pawn.canMoveTo(start, destination, board));
     }
 
 
