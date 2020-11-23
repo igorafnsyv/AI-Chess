@@ -3,10 +3,19 @@ package chess_game.chess_pieces;
 import chess_game.ChessBoard;
 import chess_game.Position;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
 
 //TODO: add castling
+//TODO: when king is checked, next move must prevent check
 
 public class King extends Piece {
+
+    private boolean checked = false;
 
 
     public King(boolean white) {
@@ -14,9 +23,15 @@ public class King extends Piece {
     }
 
 
+    //TODO: store position in piece and get position object from
     public boolean isChecked(ChessBoard board) {
-        Position kingPosition = (this.isWhite() ? board.getWhiteKingPosition() : board.getBlackKingPosition());
-        String position = kingPosition.getPosition();
+        this.checked = isCheckable(this.getPosition(), board);
+        return checked;
+    }
+
+    private boolean isCheckable(Position pos, ChessBoard board) {
+
+        String position = pos.toString();
         char column = position.charAt(0);
         char row = position.charAt(1);
 
@@ -26,7 +41,7 @@ public class King extends Piece {
             Piece piece = currentPosition.getPiece();
             if (piece != null) {
                 if (piece.isWhite() == this.isWhite()) return false;
-                return piece.canMoveTo(currentPosition, kingPosition, board);
+                return piece.canMoveTo(currentPosition, pos, board);
             }
         }
 
@@ -36,7 +51,7 @@ public class King extends Piece {
             Piece piece = currentPosition.getPiece();
             if (piece != null) {
                 if (piece.isWhite() == this.isWhite()) return false;
-                return piece.canMoveTo(currentPosition, kingPosition, board);
+                return piece.canMoveTo(currentPosition, pos, board);
             }
         }
 
@@ -46,7 +61,7 @@ public class King extends Piece {
             Piece piece = currentPosition.getPiece();
             if (piece != null) {
                 if (piece.isWhite() == this.isWhite()) return false;
-                return piece.canMoveTo(currentPosition, kingPosition, board);
+                return piece.canMoveTo(currentPosition, pos, board);
             }
         }
         // Checking same column, rows above
@@ -55,7 +70,7 @@ public class King extends Piece {
             Piece piece = currentPosition.getPiece();
             if (piece != null) {
                 if (piece.isWhite() == this.isWhite()) return false;
-                return piece.canMoveTo(currentPosition, kingPosition, board);
+                return piece.canMoveTo(currentPosition, pos, board);
             }
         }
 
@@ -68,7 +83,7 @@ public class King extends Piece {
             Piece piece = currentPosition.getPiece();
             if (piece != null) {
                 if (piece.isWhite() == this.isWhite()) return false;
-                return piece.canMoveTo(currentPosition, kingPosition, board);
+                return piece.canMoveTo(currentPosition, pos, board);
             }
             currentRow--;
             currentColumn--;
@@ -81,7 +96,7 @@ public class King extends Piece {
             Piece piece = currentPosition.getPiece();
             if (piece != null) {
                 if (piece.isWhite() == this.isWhite()) return false;
-                return piece.canMoveTo(currentPosition, kingPosition, board);
+                return piece.canMoveTo(currentPosition, pos, board);
             }
             currentRow++;
             currentColumn++;
@@ -90,9 +105,36 @@ public class King extends Piece {
         return false;
     }
 
+    public boolean isMate(ChessBoard board) {
+        if (!this.checked) return false;
+        char[] position = this.getPosition().toString().toCharArray();
+
+        List<Position> positions = new ArrayList<>();
+        positions.add(board.getPosition(String.valueOf(position[0]) + ((char) (position[1] + 1))));
+        positions.add(board.getPosition(String.valueOf((char) (position[0] + 1)) + ((char) (position[1] + 1))));
+        positions.add(board.getPosition(String.valueOf((char) (position[0] + 1)) + (position[1])));
+        positions.add(board.getPosition(String.valueOf((char) (position[0] + 1)) + ((char) (position[1] - 1))));
+        positions.add(board.getPosition(String.valueOf(position[0]) + ((char) (position[1] - 1))));
+        positions.add(board.getPosition(String.valueOf((char) (position[0] - 1)) + ((char) (position[1] - 1))));
+        positions.add(board.getPosition(String.valueOf((char) (position[0] - 1)) + ((char) (position[1]))));
+        positions.add(board.getPosition(String.valueOf((char) (position[0] - 1)) + ((char) (position[1] + 1))));
+        positions = positions.stream().filter(Objects::nonNull).collect(Collectors.toList());
+
+        for (Position pos : positions) {
+            boolean potentialMovePosition = pos.getPiece() == null ||
+                    (pos.getPiece() != null && pos.getPiece().isWhite() != this.isWhite());
+            if (potentialMovePosition && !isCheckable(pos, board)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 
 
     //TODO: add checked support
+    //TODO: remove startPosition
     @Override
     public boolean canMoveTo(Position start, Position destination, ChessBoard board) {
         if (!start.getPiece().equals(this)) return false;

@@ -16,33 +16,41 @@ public class ChessBoard {
 
     public static ChessBoard initializeBoard() {
         ChessBoard board = new ChessBoard();
-        board.getPosition("A1").setPiece(new Rook(true));
-        board.getPosition("B1").setPiece(new Knight(true));
-        board.getPosition("C1").setPiece(new Bishop(true));
-        board.getPosition("D1").setPiece(new Queen(true));
-        board.getPosition("E1").setPiece(new King(true));
-        board.getPosition("F1").setPiece(new Bishop(true));
-        board.getPosition("G1").setPiece(new Knight(true));
-        board.getPosition("H1").setPiece(new Rook(true));
+        board.positionPiece(new Rook(true), "A1");
+        board.positionPiece(new Knight(true), "B1");
+        board.positionPiece(new Bishop(true), "C1");
+        board.positionPiece(new Queen(true), "D1");
+        board.positionPiece(new King(true), "E1");
+        board.positionPiece(new Bishop(true), "F1");
+        board.positionPiece(new Knight(true), "G1");
+        board.positionPiece(new Rook(true), "H1");
         for (char ch = 'A'; ch <= 'H'; ch++) {
             String position = String.valueOf(ch) + 2;
-            board.getPosition(position).setPiece(new Pawn(true));
+            board.positionPiece(new Pawn(true), position);
         }
 
-        board.getPosition("A8").setPiece(new Rook(false));
-        board.getPosition("B8").setPiece(new Knight(false));
-        board.getPosition("C8").setPiece(new Bishop(false));
-        board.getPosition("D8").setPiece(new Queen(false));
-        board.getPosition("E8").setPiece(new King(false));
-        board.getPosition("F8").setPiece(new Bishop(false));
-        board.getPosition("G8").setPiece(new Knight(false));
-        board.getPosition("H8").setPiece(new Rook(false));
+        board.positionPiece(new Rook(false), "A8");
+        board.positionPiece(new Knight(false), "B8");
+        board.positionPiece(new Bishop(false), "C8");
+        board.positionPiece(new Queen(false), "D8");
+        board.positionPiece(new King(false), "E8");
+        board.positionPiece(new Bishop(false), "F8");
+        board.positionPiece(new Knight(false), "G8");
+        board.positionPiece(new Rook(false), "H8");
+
         for (char ch = 'A'; ch <= 'H'; ch++) {
             String position = String.valueOf(ch) + 7;
+            board.positionPiece(new Pawn(false), position);
             board.getPosition(position).setPiece(new Pawn(false));
         }
 
         return board;
+    }
+
+    public void positionPiece(Piece piece, String positionStr) {
+        Position position = this.getPosition(positionStr);
+        position.setPiece(piece);
+        piece.setPosition(position);
     }
 
     private ChessBoard() {
@@ -83,22 +91,6 @@ public class ChessBoard {
 
     public Position getPosition(String position) {
         return board.get(position);
-    }
-
-    public void setWhiteKingPosition(Position whiteKingPosition) {
-        this.whiteKingPosition = whiteKingPosition;
-    }
-
-    public Position getWhiteKingPosition() {
-        return whiteKingPosition;
-    }
-
-    public void setBlackKingPosition(Position blackKingPosition) {
-        this.blackKingPosition = blackKingPosition;
-    }
-
-    public Position getBlackKingPosition() {
-        return blackKingPosition;
     }
 
     public int size() {

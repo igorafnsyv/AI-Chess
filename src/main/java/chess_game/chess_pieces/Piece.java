@@ -7,9 +7,23 @@ public abstract class Piece {
 
 
     private final boolean white;
+    private Position position;
 
     public Piece(boolean white) {
         this.white = white;
+    }
+
+    public Piece(boolean white, Position position) {
+        this.white = white;
+        this.position = position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public Position getPosition() {
+        return position;
     }
 
     public void moveTo(Position start, Position destination) {
@@ -24,6 +38,7 @@ public abstract class Piece {
     public boolean isWhite() {
         return white;
     }
+
 
     @Override
     public String toString() {

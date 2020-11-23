@@ -38,11 +38,11 @@ public class Rook extends Piece {
     }
 
     private boolean allBetweenPositionsFree(Position start, Position destination, ChessBoard board) {
-        String position1 = start.getPosition();
+        String position1 = start.toString();
         char startCol = position1.charAt(0);
         char startRow = position1.charAt(1);
 
-        String position2 = destination.getPosition();
+        String position2 = destination.toString();
         char destinationCol = position2.charAt(0);
         char destinationRow = position2.charAt(1);
 

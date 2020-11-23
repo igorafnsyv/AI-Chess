@@ -35,11 +35,11 @@ public class Pawn extends Piece {
         boolean result;
         //White pawn can only move up
         if (this.isWhite()) {
-            result = start.getPosition().charAt(1) < destination.getPosition().charAt(1);
+            result = start.toString().charAt(1) < destination.toString().charAt(1);
 
         //Black pawn can only move down
         } else {
-            result = start.getPosition().charAt(1) > destination.getPosition().charAt(1);
+            result = start.toString().charAt(1) > destination.toString().charAt(1);
         }
 
         //If it is a diagonal move, destination needs to contain piece of opposite color
@@ -68,8 +68,8 @@ public class Pawn extends Piece {
     }
 
     public boolean allBetweenPositionsFree(Position start, Position destination, ChessBoard board) {
-        char[] startChars = start.getPosition().toCharArray();
-        char[] destinationChars = destination.getPosition().toCharArray();
+        char[] startChars = start.toString().toCharArray();
+        char[] destinationChars = destination.toString().toCharArray();
 
         int verticalDistance = Math.abs(destinationChars[1] - startChars[1]);
         for (int i = 1; i < verticalDistance; i++) {

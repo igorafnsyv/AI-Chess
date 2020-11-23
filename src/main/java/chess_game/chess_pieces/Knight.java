@@ -28,8 +28,8 @@ public class Knight extends Piece {
     }
 
     private boolean canReach(Position start, Position destination) {
-        char[] startChars = start.getPosition().toCharArray();
-        char[] destinationChars= destination.getPosition().toCharArray();
+        char[] startChars = start.toString().toCharArray();
+        char[] destinationChars= destination.toString().toCharArray();
 
         int rowMove = Math.abs(startChars[0] - destinationChars[0]);
         int columnMove = Math.abs(destinationChars[1] - startChars[1]);

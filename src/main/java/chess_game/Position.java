@@ -31,9 +31,9 @@ public class Position {
         this.setPiece(piece);
     }
 
-    public String getPosition() {
-        return this.position;
-    }
+//    public String getPosition() {
+//        return this.position;
+//    }
 
 
     /**

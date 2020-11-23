@@ -12,9 +12,8 @@ public class KingTest {
     public void testIsCheckedFalseWhenSameColorQueenOnTheLeft() {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
-        board.getPosition("B1").setPiece(king);
-        board.getPosition("A1").setPiece(new Queen(false));
-        board.setBlackKingPosition(board.getPosition("B1"));
+        board.positionPiece(king, "B1");
+        board.positionPiece(new Queen(false), "A1");
         assertFalse(king.isChecked(board));
     }
 
@@ -23,10 +22,8 @@ public class KingTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
         Queen queen = new Queen(true);
-        Position kingPosition = board.getPosition("D1");
-        kingPosition.setPiece(king);
-        board.getPosition("A1").setPiece(queen);
-        board.setBlackKingPosition(kingPosition);
+        board.positionPiece(king, "D1");
+        board.positionPiece(queen, "A1");
         assertTrue(king.isChecked(board));
 
     }
@@ -36,10 +33,9 @@ public class KingTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
         Queen queen = new Queen(true);
-        Position kingPosition = board.getPosition("A1");
-        kingPosition.setPiece(king);
-        board.getPosition("C1").setPiece(queen);
-        board.setBlackKingPosition(kingPosition);
+
+        board.positionPiece(king, "A1");
+        board.positionPiece(queen, "C1");
         assertTrue(king.isChecked(board));
     }
 
@@ -48,10 +44,8 @@ public class KingTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
         Queen queen = new Queen(true);
-        Position kingPosition = board.getPosition("A5");
-        kingPosition.setPiece(king);
-        board.getPosition("A1").setPiece(queen);
-        board.setBlackKingPosition(kingPosition);
+        board.positionPiece(king, "A5");
+        board.positionPiece(queen, "A1");
         assertTrue(king.isChecked(board));
     }
 
@@ -60,10 +54,8 @@ public class KingTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
         Queen queen = new Queen(true);
-        Position kingPosition = board.getPosition("A1");
-        kingPosition.setPiece(king);
-        board.getPosition("A5").setPiece(queen);
-        board.setBlackKingPosition(kingPosition);
+        board.positionPiece(king, "A1");
+        board.positionPiece(queen, "A5");
         assertTrue(king.isChecked(board));
     }
 
@@ -72,10 +64,9 @@ public class KingTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
         Queen queen = new Queen(true);
-        Position kingPosition = board.getPosition("C3");
-        kingPosition.setPiece(king);
-        board.getPosition("A1").setPiece(queen);
-        board.setBlackKingPosition(kingPosition);
+
+        board.positionPiece(king, "C3");
+        board.positionPiece(queen, "A1");
         assertTrue(king.isChecked(board));
     }
 
@@ -84,10 +75,8 @@ public class KingTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
         Queen queen = new Queen(true);
-        Position kingPosition = board.getPosition("A1");
-        kingPosition.setPiece(king);
-        board.getPosition("C3").setPiece(queen);
-        board.setBlackKingPosition(kingPosition);
+        board.positionPiece(king, "A1");
+        board.positionPiece(queen, "C3");
         assertTrue(king.isChecked(board));
     }
 
@@ -102,11 +91,28 @@ public class KingTest {
     }
 
     @Test
+    public void testCanMakeMoveWithOneSpaceLeft() {
+        King king = new King(false);
+        Position start = new Position("B1");
+        start.setPiece(king);
+        Position destination = new Position("A1");
+        assertTrue(king.canMoveTo(start,destination, null));
+    }
+
+    @Test
     public void testCanMakeMoveOneSpaceUp() {
         King king = new King(false);
         Position start = new Position("A1");
         start.setPiece(king);
         Position destination = new Position("A2");
+        assertTrue(king.canMoveTo(start,destination, null));
+    }
+    @Test
+    public void testCanMakeMoveOneSpaceDown() {
+        King king = new King(false);
+        Position start = new Position("A2");
+        start.setPiece(king);
+        Position destination = new Position("A1");
         assertTrue(king.canMoveTo(start,destination, null));
     }
 
@@ -116,6 +122,33 @@ public class KingTest {
         Position start = new Position("A1");
         start.setPiece(king);
         Position destination = new Position("B2");
+        assertTrue(king.canMoveTo(start,destination, null));
+    }
+
+    @Test
+    public void testCanMakeMoveDiagonallyDown() {
+        King king = new King(false);
+        Position start = new Position("B2");
+        start.setPiece(king);
+        Position destination = new Position("A1");
+        assertTrue(king.canMoveTo(start,destination, null));
+    }
+
+    @Test
+    public void testCanMakeMoveDiagonallyUpLeft() {
+        King king = new King(false);
+        Position start = new Position("B1");
+        start.setPiece(king);
+        Position destination = new Position("A2");
+        assertTrue(king.canMoveTo(start,destination, null));
+    }
+
+    @Test
+    public void testCanMakeMoveDiagonallyDownRight() {
+        King king = new King(false);
+        Position start = new Position("B2");
+        start.setPiece(king);
+        Position destination = new Position("C1");
         assertTrue(king.canMoveTo(start,destination, null));
     }
 
@@ -156,6 +189,14 @@ public class KingTest {
     public void testToStringWhite() {
         King king = new King(true);
         assertEquals(king.toString(), "WK");
+    }
+
+    @Test
+    public void testIsMateReturnsFalseWhenNotChecked() {
+        ChessBoard board = ChessBoard.initializeBoard();
+        King king = (King) board.getPosition("E1").getPiece();
+        assertFalse(king.isChecked(board));
+        assertFalse(king.isMate(board));
     }
 
 
