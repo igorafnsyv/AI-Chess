@@ -27,7 +27,6 @@ public class KingTest {
         board.positionPiece(king, "D1");
         board.positionPiece(queen, "A1");
         assertTrue(king.isChecked(board));
-
     }
 
     @Test
@@ -229,13 +228,53 @@ public class KingTest {
         King king = (King) board.getPosition("E8").getPiece();
         Knight knight = (Knight) board.getPosition("G1").getPiece();
         knight.moveTo(knight.getPosition(), board.getPosition("D6"));
-        System.out.println(board);
-        System.out.println(knight.getPosition());
-        System.out.println(king.getPosition());
         assertTrue(king.isChecked(board));
-
-
+        assertTrue(king.isMate(board));
     }
+
+    @Test
+    public void testIsKingCheckedByPawnFewSquaresAway() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        King king = new King(false);
+        Pawn pawn = new Pawn(true);
+        board.positionPiece(king, "E8");
+        board.positionPiece(pawn, "F7");
+        assertTrue(king.isChecked(board));
+    }
+
+    @Test
+    public void testKingGetLegalMovePositions() {
+        ChessBoard board = ChessBoard.initializeBoard();
+        King king = (King) board.getPosition("E8").getPiece();
+        assertEquals(king.getLegalMovePositions(board).size(), 0);
+    }
+
+    @Test
+    public void testKingGetLegalMovePositionsWhenInMiddleOfBoard() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        King king = new King(false);
+        board.positionPiece(king, "C4");
+        assertEquals(king.getLegalMovePositions(board).size(), 8);
+    }
+
+    @Test
+    public void testKingGetLegalMovePositionsWhenInMiddleOfBoardAndNeighbourSameColor() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        King king = new King(false);
+        board.positionPiece(king, "C4");
+        board.positionPiece(new Queen(false), "C5");
+        assertEquals(king.getLegalMovePositions(board).size(), 7);
+    }
+
+    @Test
+    public void testKingGetLegalMovePositionsWhenInMiddleOfBoardAndNeighbourOppositeColor() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        King king = new King(false);
+        board.positionPiece(king, "C4");
+        board.positionPiece(new Queen(true), "C5");
+        assertEquals(king.getLegalMovePositions(board).size(), 3);
+    }
+
 
 
 }

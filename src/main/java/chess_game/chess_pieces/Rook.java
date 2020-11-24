@@ -3,6 +3,8 @@ package chess_game.chess_pieces;
 import chess_game.ChessBoard;
 import chess_game.Position;
 
+import java.util.List;
+
 public class Rook extends Piece {
 
     public Rook(boolean white) {
@@ -21,6 +23,11 @@ public class Rook extends Piece {
             if (destination.getPiece().isWhite() == this.isWhite()) result = false;
         }
         return result;
+    }
+
+    @Override
+    public List<Position> getLegalMovePositions(ChessBoard board) {
+        return null;
     }
 
     @Override

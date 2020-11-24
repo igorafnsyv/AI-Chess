@@ -3,6 +3,8 @@ package chess_game.chess_pieces;
 import chess_game.ChessBoard;
 import chess_game.Position;
 
+import java.util.List;
+
 public class Queen extends Piece{
 
     public Queen(boolean white) {
@@ -22,6 +24,11 @@ public class Queen extends Piece{
             result = destination.getPiece().isWhite() != this.isWhite();
         }
         return result;
+    }
+
+    @Override
+    public List<Position> getLegalMovePositions(ChessBoard board) {
+        return null;
     }
 
     @Override

@@ -3,6 +3,8 @@ package chess_game.chess_pieces;
 import chess_game.ChessBoard;
 import chess_game.Position;
 
+import java.util.List;
+
 public class Knight extends Piece {
 
     public Knight(boolean white) {
@@ -19,6 +21,11 @@ public class Knight extends Piece {
         }
 
         return result;
+    }
+
+    @Override
+    public List<Position> getLegalMovePositions(ChessBoard board) {
+        return null;
     }
 
     @Override

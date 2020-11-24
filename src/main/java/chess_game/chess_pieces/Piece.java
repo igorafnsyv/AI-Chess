@@ -3,6 +3,8 @@ package chess_game.chess_pieces;
 import chess_game.ChessBoard;
 import chess_game.Position;
 
+import java.util.List;
+
 public abstract class Piece {
 
 
@@ -34,6 +36,8 @@ public abstract class Piece {
 
 
     public abstract boolean canMoveTo(Position start, Position destination, ChessBoard board);
+
+    public  abstract List<Position> getLegalMovePositions(ChessBoard board);
 
 
     public boolean isWhite() {

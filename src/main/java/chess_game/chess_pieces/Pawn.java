@@ -3,6 +3,8 @@ package chess_game.chess_pieces;
 import chess_game.ChessBoard;
 import chess_game.Position;
 
+import java.util.List;
+
 public class Pawn extends Piece {
 
     private boolean madeFirstMove;
@@ -52,6 +54,11 @@ public class Pawn extends Piece {
         }
 
         return result;
+    }
+
+    @Override
+    public List<Position> getLegalMovePositions(ChessBoard board) {
+        return null;
     }
 
     private boolean canReach(Position start, Position destination) {

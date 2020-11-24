@@ -3,6 +3,9 @@ package chess_game.chess_pieces;
 import chess_game.ChessBoard;
 import chess_game.Position;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Bishop extends Piece {
 
 
@@ -13,42 +16,105 @@ public class Bishop extends Piece {
     @Override
     public boolean canMoveTo(Position start, Position destination, ChessBoard board) {
         if (!start.getPiece().equals(this)) return false;
-        if (start.diagonalDistanceTo(destination) == -1) return false;
-        if (!allBetweenPositionsFree(start, destination, board)) return false;
-        boolean destinationFree = destination.getPiece() == null;
-        boolean result = true;
+        return this.getLegalMovePositions(board).contains(destination);
 
-        // If destination cell occupied, can move there only if pieces are of different color
-        if (!destinationFree) {
-            result = this.isWhite() != destination.getPiece().isWhite();
-        }
-
-        return result;
     }
 
-    public boolean allBetweenPositionsFree(Position start, Position destination, ChessBoard board) {
-        String position1 = start.toString();
-        char startCol = position1.charAt(0);
-        char startRow = position1.charAt(1);
+    @Override
+    public List<Position> getLegalMovePositions(ChessBoard board) {
+        List<Position> positions = new ArrayList<>();
+        char[] positionChars = this.getPosition().toString().toCharArray();
+        char startCol = positionChars[0];
+        char startRow = positionChars[1];
 
-        String position2 = destination.toString();
-        char destinationCol = position2.charAt(0);
-        char destinationRow = position2.charAt(1);
-
+        //top right diagonal
         int colStep = 1;
         int rowStep = 1;
-        if (startCol > destinationCol && startRow > destinationRow) {
-            colStep = -1;
-            rowStep = -1;
+        char currentCol = (char) (startCol + 1);
+        char currentRow = (char) (startRow + 1);
+        while (currentCol <= 'H' && currentRow <= '8') {
+            String potentialPosition = String.valueOf(currentCol) + currentRow;
+            Position position = board.getPosition(potentialPosition);
+            Piece positionPiece = position.getPiece();
+            if (positionPiece == null) {
+                positions.add(position);
+            } else  if (positionPiece.isWhite() != this.isWhite()){
+                positions.add(position);
+                break;
+            } else {
+                break;
+            }
+            currentCol = (char) (currentCol + colStep);
+            currentRow = (char) (currentRow + rowStep);
         }
 
-        for (int i = 0; i < destination.diagonalDistanceTo(destination); i++) {
-            Position position = board.getPosition(String.valueOf(startCol += colStep) + String.valueOf(startRow += rowStep));
-            if (position.getPiece() != null) return false;
+        //top left diagonal
+        colStep = -1;
+        rowStep = 1;
+        currentCol = (char) (startCol + colStep);
+        currentRow = (char) (startRow + rowStep);
+        while (currentCol >= 'A' && currentRow <= '8') {
+            String potentialPosition = String.valueOf(currentCol) + currentRow;
+            Position position = board.getPosition(potentialPosition);
+            Piece positionPiece = position.getPiece();
+            if (positionPiece == null) {
+                positions.add(position);
+            } else  if (positionPiece.isWhite() != this.isWhite()){
+                positions.add(position);
+                break;
+            } else {
+                break;
+            }
+            currentCol = (char) (currentCol + colStep);
+            currentRow = (char) (currentRow + rowStep);
         }
 
-        return true;
+        // low right diagonal
+        colStep = +1;
+        rowStep = -1;
+        currentCol = (char) (startCol + colStep);
+        currentRow = (char) (startRow + rowStep);
+        while (currentCol <= 'H' && currentRow >= '1') {
+            String potentialPosition = String.valueOf(currentCol) + currentRow;
+            Position position = board.getPosition(potentialPosition);
+            Piece positionPiece = position.getPiece();
+            if (positionPiece == null) {
+                positions.add(position);
+            } else  if (positionPiece.isWhite() != this.isWhite()){
+                positions.add(position);
+                break;
+            } else {
+                break;
+            }
+            currentCol = (char) (currentCol + colStep);
+            currentRow = (char) (currentRow + rowStep);
+        }
+
+        //low left diagonal
+        colStep = -1;
+        rowStep = -1;
+        currentCol = (char) (startCol + colStep);
+        currentRow = (char) (startRow + rowStep);
+        while (currentCol >= 'A' && currentRow >= '1') {
+            String potentialPosition = String.valueOf(currentCol) + currentRow;
+            Position position = board.getPosition(potentialPosition);
+            Piece positionPiece = position.getPiece();
+            if (positionPiece == null) {
+                positions.add(position);
+            } else  if (positionPiece.isWhite() != this.isWhite()){
+                positions.add(position);
+                break;
+            } else {
+                break;
+            }
+            currentCol = (char) (currentCol + colStep);
+            currentRow = (char) (currentRow + rowStep);
+        }
+
+
+        return positions;
     }
+
 
     @Override
     public String toString() {

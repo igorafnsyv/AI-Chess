@@ -25,7 +25,7 @@ public class BishopTest {
         Bishop bishop = new Bishop(true);
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
-        start.setPiece(bishop);
+        board.positionPiece(bishop, "A1");
         Position destination = board.getPosition("B2");
         assertTrue(bishop.canMoveTo(start, destination, board));
     }
@@ -35,8 +35,8 @@ public class BishopTest {
         Bishop bishop = new Bishop(true);
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("D4");
+        board.positionPiece(bishop, "D4");
         Position destination = board.getPosition("C3");
-        start.setPiece(bishop);
         assertTrue(bishop.canMoveTo(start, destination, board));
     }
 
@@ -45,7 +45,7 @@ public class BishopTest {
         Bishop bishop = new Bishop(true);
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
-        start.setPiece(bishop);
+        board.positionPiece(bishop, "A1");
         Position destination = board.getPosition("H8");
         assertTrue(bishop.canMoveTo(start, destination, board));
     }
@@ -55,37 +55,55 @@ public class BishopTest {
         Bishop bishop = new Bishop(true);
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("H8");
+        board.positionPiece(bishop, "H8");
         Position destination = board.getPosition("A1");
-        start.setPiece(bishop);
         assertTrue(bishop.canMoveTo(start, destination, board));
     }
 
 
     @Test
-    public void testAllBetweenPositionsFree() {
-        Bishop bishop = new Bishop(true);
-        ChessBoard board = ChessBoard.initializeEmptyBoard();
-        Position start = board.getPosition("A1");
-        start.setPiece(bishop);
-        Position destination = board.getPosition("H8");
-        assertTrue(bishop.allBetweenPositionsFree(start, destination, board));
-    }
-
-    @Test
-    public void testAllBetweenPositionsFreeFalse() {
-        Bishop bishop = new Bishop(true);
-        ChessBoard board = ChessBoard.initializeEmptyBoard();
-        Position start = board.getPosition("A1");
-        start.setPiece(bishop);
-        board.getPosition("D4").setPiece(new Queen(false));
-        Position destination = board.getPosition("H8");
-        assertTrue(bishop.allBetweenPositionsFree(start, destination, board));
-    }
-
-    @Test
     public void testToString() {
         Bishop bishop = new Bishop(false);
         assertEquals(bishop.toString(), "BB");
+    }
+
+    @Test
+    public void testGetLegalMovesPositions() {
+        Bishop bishop = new Bishop(false);
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        board.positionPiece(bishop, "D3");
+        System.out.println(bishop.getLegalMovePositions(board).size());
+        assertEquals(bishop.getLegalMovePositions(board).size(), 11);
+    }
+
+    @Test
+    public void testGetLegalMovesOnePositionBlockedBySameColor() {
+        Bishop bishop = new Bishop(false);
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        board.positionPiece(bishop, "D3");
+        board.positionPiece(new Pawn(false), "G6");
+        assertEquals(bishop.getLegalMovePositions(board).size(), 9);
+    }
+
+    @Test
+    public void testGetLegalMovesOnePositionBlockedByOppositeColor() {
+        Bishop bishop = new Bishop(false);
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        board.positionPiece(bishop, "D3");
+        board.positionPiece(new Pawn(true), "G6");
+        System.out.println(bishop.getLegalMovePositions(board));
+        assertEquals(bishop.getLegalMovePositions(board).size(), 10);
+    }
+
+    @Test
+    public void testGetLegalMovesOnePositionBlockedByOppositeColorTwice() {
+        Bishop bishop = new Bishop(false);
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        board.positionPiece(bishop, "D3");
+        board.positionPiece(new Pawn(true), "G6");
+        board.positionPiece(new Pawn(true), "C4");
+        System.out.println(bishop.getLegalMovePositions(board));
+        assertEquals(bishop.getLegalMovePositions(board).size(), 8);
     }
 
 }

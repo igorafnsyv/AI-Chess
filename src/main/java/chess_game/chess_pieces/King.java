@@ -4,15 +4,19 @@ import chess_game.ChessBoard;
 import chess_game.Position;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 
-//TODO: add castling
 //TODO: when king is checked, next move must prevent check
-
+//TODO: current problem - for isCheckable, when considering new position, current positon block all between positions free
+/*
+Need to fix above mentioned all between position problem by: getting all legal moves for piece and checking if position
+is in the list of legal moves
+ */
 public class King extends Piece {
 
     private boolean checked = false;
@@ -63,7 +67,6 @@ public class King extends Piece {
         for (char currentRow = (char) (row - 1); currentRow >= '1'; currentRow--) {
             Position currentPosition = board.getPosition("" + column + currentRow);
             Piece piece = currentPosition.getPiece();
-            System.out.println(piece);
             if (piece != null) {
                 if (piece.isWhite() == this.isWhite()) break;
                 if (piece.canMoveTo(currentPosition, pos, board)){
@@ -107,7 +110,6 @@ public class King extends Piece {
                 //knight must be of opposite color
                 .filter((positionEntry) -> positionEntry != null && positionEntry.getPiece() instanceof Knight)
                 .collect(Collectors.toList());
-        System.out.println(knightPositionList);
         if (knightPositionList.size() != 0) return true;
 
 
@@ -164,7 +166,7 @@ public class King extends Piece {
         //Checking from diagonal left above
         currentRow = (char) (row + 1);
         currentColumn = (char) (column - 1);
-        while (currentColumn >= 'A' && currentRow >= '1') {
+        while (currentColumn >= 'A' && currentRow <= '8') {
             Position currentPosition = board.getPosition("" + currentColumn + currentRow);
             Piece piece = currentPosition.getPiece();
             if (piece != null) {
@@ -176,39 +178,18 @@ public class King extends Piece {
             currentRow++;
             currentColumn--;
         }
-
         return false;
     }
 
     public boolean isMate(ChessBoard board) {
         if (!this.checked) return false;
-        char[] position = this.getPosition().toString().toCharArray();
+        if (this.getLegalMovePositions(board).isEmpty()) return true;
 
-        List<Position> positions = new ArrayList<>();
-        positions.add(board.getPosition(String.valueOf(position[0]) + ((char) (position[1] + 1))));
-        positions.add(board.getPosition(String.valueOf((char) (position[0] + 1)) + ((char) (position[1] + 1))));
-        positions.add(board.getPosition(String.valueOf((char) (position[0] + 1)) + (position[1])));
-        positions.add(board.getPosition(String.valueOf((char) (position[0] + 1)) + ((char) (position[1] - 1))));
-        positions.add(board.getPosition(String.valueOf(position[0]) + ((char) (position[1] - 1))));
-        positions.add(board.getPosition(String.valueOf((char) (position[0] - 1)) + ((char) (position[1] - 1))));
-        positions.add(board.getPosition(String.valueOf((char) (position[0] - 1)) + ((char) (position[1]))));
-        positions.add(board.getPosition(String.valueOf((char) (position[0] - 1)) + ((char) (position[1] + 1))));
-        positions = positions.stream().filter(Objects::nonNull).collect(Collectors.toList());
-
-        for (Position pos : positions) {
-            boolean potentialMovePosition = pos.getPiece() == null ||
-                    (pos.getPiece() != null && pos.getPiece().isWhite() != this.isWhite());
-            if (potentialMovePosition && !isCheckable(pos, board)) {
-                return false;
-            }
-        }
-
-        return true;
+        return false;
     }
 
 
 
-    //TODO: add checked support
     //TODO: remove startPosition
     @Override
     public boolean canMoveTo(Position start, Position destination, ChessBoard board) {
@@ -223,6 +204,32 @@ public class King extends Piece {
         }
 
         return false;
+    }
+
+    @Override
+    public List<Position> getLegalMovePositions(ChessBoard board) {
+        char[] position = this.getPosition().toString().toCharArray();
+        List<Position> positions = new ArrayList<>();
+        positions.add(board.getPosition(String.valueOf(position[0]) + ((char) (position[1] + 1))));
+        positions.add(board.getPosition(String.valueOf((char) (position[0] + 1)) + ((char) (position[1] + 1))));
+        positions.add(board.getPosition(String.valueOf((char) (position[0] + 1)) + (position[1])));
+        positions.add(board.getPosition(String.valueOf((char) (position[0] + 1)) + ((char) (position[1] - 1))));
+        positions.add(board.getPosition(String.valueOf(position[0]) + ((char) (position[1] - 1))));
+        positions.add(board.getPosition(String.valueOf((char) (position[0] - 1)) + ((char) (position[1] - 1))));
+        positions.add(board.getPosition(String.valueOf((char) (position[0] - 1)) + ((char) (position[1]))));
+        positions.add(board.getPosition(String.valueOf((char) (position[0] - 1)) + ((char) (position[1] + 1))));
+        positions = positions.stream().filter(Objects::nonNull).collect(Collectors.toList());
+        Iterator<Position> iterator = positions.iterator();
+        while (iterator.hasNext()) {
+            Position pos = iterator.next();
+            boolean potentialMovePosition = pos.getPiece() == null ||
+                    (pos.getPiece() != null && pos.getPiece().isWhite() != this.isWhite());
+            if (!potentialMovePosition || isCheckable(pos, board)) {
+                // Use iterator, otherwise concurrent modification exception is thrown
+                iterator.remove();
+            }
+        }
+        return positions;
     }
 
     private boolean canReach(Position start, Position destination) {
