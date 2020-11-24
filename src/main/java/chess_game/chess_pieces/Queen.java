@@ -12,10 +12,6 @@ public class Queen extends Piece{
         super(white);
     }
 
-    @Override
-    public boolean canMoveTo(Position start, Position destination, ChessBoard board) {
-        return this.getLegalMovePositions(board).contains(destination);
-    }
 
     @Override
     public List<Position> getLegalMovePositions(ChessBoard board) {

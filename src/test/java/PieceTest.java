@@ -56,7 +56,7 @@ public class PieceTest {
         Piece piece = new King(false);
         board.positionPiece(piece, "A1");
         Position newPosition = board.getPosition("A2");
-        assertTrue(piece.canMoveTo(position, newPosition, board));
+        assertTrue(piece.canMoveTo(newPosition, board));
     }
 
     @Test
@@ -66,7 +66,7 @@ public class PieceTest {
         Position destination = board.getPosition("A2");
         Piece piece = new King(false);
 
-        assertThrows(NullPointerException.class,() -> piece.canMoveTo(start, destination, board));
+        assertThrows(NullPointerException.class,() -> piece.canMoveTo(destination, board));
     }
 
     @Test
@@ -76,7 +76,7 @@ public class PieceTest {
         Position destination = board.getPosition("A1");
         Piece piece = new King(false);
         board.positionPiece(piece, "A1");
-        assertFalse(piece.canMoveTo(start, destination, board));
+        assertFalse(piece.canMoveTo(destination, board));
     }
 
     @Test
@@ -89,7 +89,7 @@ public class PieceTest {
 
         board.positionPiece(piece, "A1");
         board.positionPiece(piece1, "A2");
-        assertFalse(piece.canMoveTo(start, destination, board));
+        assertFalse(piece.canMoveTo(destination, board));
     }
 
     @Test
@@ -101,7 +101,7 @@ public class PieceTest {
         board.positionPiece(piece, "A1");
         board.positionPiece(new Pawn(true), "A2");
 
-        assertTrue(piece.canMoveTo(start, destination, board));
+        assertTrue(piece.canMoveTo(destination, board));
     }
 
     @Test

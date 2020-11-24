@@ -29,10 +29,6 @@ public class Pawn extends Piece {
         return color + "P";
     }
 
-    @Override
-    public boolean canMoveTo(Position start, Position destination, ChessBoard board) {
-        return this.getLegalMovePositions(board).contains(destination);
-    }
 
     @Override
     public List<Position> getLegalMovePositions(ChessBoard board) {

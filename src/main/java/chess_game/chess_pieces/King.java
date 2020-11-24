@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 
@@ -66,7 +65,7 @@ public class King extends Piece {
             Piece piece = currentPosition.getPiece();
             if (piece != null) {
                 if (piece.isWhite() == this.isWhite()) break;
-                if( piece.canMoveTo(currentPosition, pos, board)) {
+                if( piece.canMoveTo(pos, board)) {
                      return true;
                 }
             }
@@ -78,7 +77,7 @@ public class King extends Piece {
             Piece piece = currentPosition.getPiece();
             if (piece != null) {
                 if (piece.isWhite() == this.isWhite()) break;
-                if (piece.canMoveTo(currentPosition, pos, board)) {
+                if (piece.canMoveTo(pos, board)) {
                     return true;
                 }
 
@@ -90,7 +89,7 @@ public class King extends Piece {
             Piece piece = currentPosition.getPiece();
             if (piece != null) {
                 if (piece.isWhite() == this.isWhite()) break;
-                if (piece.canMoveTo(currentPosition, pos, board)){
+                if (piece.canMoveTo(pos, board)){
                     return true;
                 }
             }
@@ -102,7 +101,7 @@ public class King extends Piece {
             Piece piece = currentPosition.getPiece();
             if (piece != null) {
                 if (piece.isWhite() == this.isWhite()) break;
-                if (piece.canMoveTo(currentPosition, pos, board)) {
+                if (piece.canMoveTo(pos, board)) {
                     return true;
                 }
             }
@@ -149,13 +148,13 @@ public class King extends Piece {
                 //Pawn can make diagonal move only if opponent is present. Need to return the king
                 if (piece instanceof Pawn) {
                     this.positionKingBack(kingOriginalPosition, board, this);
-                    if (piece.canMoveTo(currentPosition, pos, board)) {
+                    if (piece.canMoveTo(pos, board)) {
                         this.removeKingFromBoard(kingOriginalPosition, board);
                         return true;
                     }
                     this.removeKingFromBoard(kingOriginalPosition, board);
                 }
-                else if (piece.canMoveTo(currentPosition, pos, board)) {
+                else if (piece.canMoveTo(pos, board)) {
                     return true;
                 }
             }
@@ -174,13 +173,13 @@ public class King extends Piece {
                 //Pawn can make diagonal move only if opponent is present. Need to return the king
                 if (piece instanceof Pawn) {
                     this.positionKingBack(kingOriginalPosition, board, this);
-                    if (piece.canMoveTo(currentPosition, pos, board)) {
+                    if (piece.canMoveTo(pos, board)) {
                         this.removeKingFromBoard(kingOriginalPosition, board);
                         return true;
                     }
                     this.removeKingFromBoard(kingOriginalPosition, board);
                 }
-                else if (piece.canMoveTo(currentPosition, pos, board)) {
+                else if (piece.canMoveTo(pos, board)) {
                     return true;
                 }
             }
@@ -199,12 +198,12 @@ public class King extends Piece {
                 //Pawn can make diagonal move only if opponent is present. Need to return the king
                 if (piece instanceof Pawn) {
                     this.positionKingBack(kingOriginalPosition, board, this);
-                    if (piece.canMoveTo(currentPosition, pos, board)) {
+                    if (piece.canMoveTo(pos, board)) {
                         this.removeKingFromBoard(kingOriginalPosition, board);
                         return true;
                     }
                     this.removeKingFromBoard(kingOriginalPosition, board);
-                } else if (piece.canMoveTo(currentPosition, pos, board)) {
+                } else if (piece.canMoveTo(pos, board)) {
                     return true;
                 }
             }
@@ -223,13 +222,13 @@ public class King extends Piece {
                 //Pawn can make diagonal move only if opponent is present. Need to return the king
                 if (piece instanceof Pawn) {
                     this.positionKingBack(kingOriginalPosition, board, this);
-                    if (piece.canMoveTo(currentPosition, pos, board)) {
+                    if (piece.canMoveTo(pos, board)) {
                         this.removeKingFromBoard(kingOriginalPosition, board);
                         return true;
                     }
                     this.removeKingFromBoard(kingOriginalPosition, board);
                 }
-                else if (piece.canMoveTo(currentPosition, pos, board)) {
+                else if (piece.canMoveTo(pos, board)) {
                     return true;
                 }
             }
@@ -248,13 +247,6 @@ public class King extends Piece {
     }
 
 
-
-    //TODO: remove startPosition
-    @Override
-    public boolean canMoveTo(Position start, Position destination, ChessBoard board) {
-        return this.getLegalMovePositions(board).contains(destination);
-
-    }
 
     @Override
     public List<Position> getLegalMovePositions(ChessBoard board) {

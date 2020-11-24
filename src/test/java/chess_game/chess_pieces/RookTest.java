@@ -21,7 +21,7 @@ public class RookTest {
         Position start = board.getPosition("A1");
         Position end = board.getPosition("B1");
         board.positionPiece(rook, "A1");
-        assertTrue(rook.canMoveTo(start, end, board));
+        assertTrue(rook.canMoveTo(end, board));
     }
 
     @Test
@@ -31,7 +31,7 @@ public class RookTest {
         Position start = board.getPosition("A1");
         Position end = board.getPosition("H1");
         board.positionPiece(rook, "A1");
-        assertTrue(rook.canMoveTo(start, end, board));
+        assertTrue(rook.canMoveTo(end, board));
     }
 
     @Test
@@ -42,7 +42,7 @@ public class RookTest {
         Position end = board.getPosition("H1");
         board.positionPiece(new Queen(false), "H1");
         board.positionPiece(rook, "A1");
-        assertTrue(rook.canMoveTo(start, end, board));
+        assertTrue(rook.canMoveTo(end, board));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class RookTest {
         end.setPiece(new Queen(true));
         board.positionPiece(new Queen(true), "H1");
         board.positionPiece(rook, "A1");
-        assertFalse(rook.canMoveTo(start, end, board));
+        assertFalse(rook.canMoveTo(end, board));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class RookTest {
         Position end = board.getPosition("A1");
         board.positionPiece(new Queen(true), "A1");
         board.positionPiece(rook, "H1");
-        assertFalse(rook.canMoveTo(start, end, board));
+        assertFalse(rook.canMoveTo(end, board));
     }
 
     @Test
@@ -76,7 +76,7 @@ public class RookTest {
         Position end = board.getPosition("A1");
         board.positionPiece(new Queen(true), "A1");
         board.positionPiece(rook, "A8");
-        assertFalse(rook.canMoveTo(start, end, board));
+        assertFalse(rook.canMoveTo(end, board));
     }
 
     @Test
@@ -87,7 +87,7 @@ public class RookTest {
         Position end = board.getPosition("A1");
         board.positionPiece(rook, "C3");
         board.positionPiece(new Queen(true), "A1");
-        assertFalse(rook.canMoveTo(start, end, board));
+        assertFalse(rook.canMoveTo(end, board));
     }
 
     @Test
@@ -99,7 +99,7 @@ public class RookTest {
         Position end = board.getPosition("A1");
         board.positionPiece(new Queen(true), "A1");
         board.positionPiece(rook, "H1");
-        assertFalse(rook.canMoveTo(start, end, board));
+        assertFalse(rook.canMoveTo(end, board));
     }
 
     @Test

@@ -21,7 +21,7 @@ public class KnightTest {
         Position start = board.getPosition("E4");
         board.positionPiece(knight, "E4");
         Position end = board.getPosition("F6");
-        assertTrue(knight.canMoveTo(start, end, board));
+        assertTrue(knight.canMoveTo(end, board));
     }
 
     @Test
@@ -31,7 +31,7 @@ public class KnightTest {
         Position start = board.getPosition("E4");
         board.positionPiece(knight, "E4");
         Position end = board.getPosition("D6");
-        assertTrue(knight.canMoveTo(start, end, board));
+        assertTrue(knight.canMoveTo(end, board));
     }
 
     @Test
@@ -41,7 +41,7 @@ public class KnightTest {
         Position start = board.getPosition("E4");
         board.positionPiece(knight, "E4");
         Position end = board.getPosition("C5");
-        assertTrue(knight.canMoveTo(start, end, board));
+        assertTrue(knight.canMoveTo(end, board));
     }
 
     @Test
@@ -51,7 +51,7 @@ public class KnightTest {
         Position start = board.getPosition("E4");
         board.positionPiece(knight, "E4");
         Position end = board.getPosition("G5");
-        assertTrue(knight.canMoveTo(start, end, board));
+        assertTrue(knight.canMoveTo(end, board));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class KnightTest {
         Position start = board.getPosition("E4");
         board.positionPiece(knight, "E4");
         Position end = board.getPosition("G3");
-        assertTrue(knight.canMoveTo(start, end, board));
+        assertTrue(knight.canMoveTo(end, board));
     }
 
     @Test
@@ -71,7 +71,7 @@ public class KnightTest {
         Position start = board.getPosition("E4");
         board.positionPiece(knight, "E4");
         Position end = board.getPosition("C3");
-        assertTrue(knight.canMoveTo(start, end, board));
+        assertTrue(knight.canMoveTo(end, board));
     }
 
     @Test
@@ -81,7 +81,7 @@ public class KnightTest {
         Position start = board.getPosition("E4");
         board.positionPiece(knight, "E4");
         Position end = board.getPosition("F2");
-        assertTrue(knight.canMoveTo(start, end, board));
+        assertTrue(knight.canMoveTo(end, board));
     }
 
     @Test
@@ -91,7 +91,7 @@ public class KnightTest {
         Position start = board.getPosition("E4");
         board.positionPiece(knight, "E4");
         Position end = board.getPosition("D2");
-        assertTrue(knight.canMoveTo(start, end, board));
+        assertTrue(knight.canMoveTo(end, board));
     }
 
     @Test

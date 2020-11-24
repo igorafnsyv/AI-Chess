@@ -28,7 +28,7 @@ public class QueenTest {
         Position start = board.getPosition("A1");
         Position end = board.getPosition("H1");
         board.positionPiece(queen, start.toString());
-        assertTrue(queen.canMoveTo(start, end, board));
+        assertTrue(queen.canMoveTo(end, board));
     }
 
     @Test
@@ -39,7 +39,7 @@ public class QueenTest {
         Position end = board.getPosition("H1");
         end.setPiece(new King(false));
         board.positionPiece(queen, start.toString());
-        assertFalse(queen.canMoveTo(start, end, board));
+        assertFalse(queen.canMoveTo(end, board));
     }
 
 
@@ -51,7 +51,7 @@ public class QueenTest {
         Position end = board.getPosition("H1");
         end.setPiece(new King(true));
         board.positionPiece(queen, "A1");
-        assertTrue(queen.canMoveTo(start, end, board));
+        assertTrue(queen.canMoveTo(end, board));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class QueenTest {
         Position end = board.getPosition("H1");
         board.getPosition("C1").setPiece(new King(false));
         board.positionPiece(queen, "A1");
-        assertFalse(queen.canMoveTo(start, end, board));
+        assertFalse(queen.canMoveTo(end, board));
     }
 
     @Test
@@ -72,7 +72,7 @@ public class QueenTest {
         Position start = board.getPosition("A1");
         board.positionPiece(queen, "A1");
         Position end = board.getPosition("D4");
-        assertTrue(queen.canMoveTo(start, end, board));
+        assertTrue(queen.canMoveTo(end, board));
 
     }
 
@@ -83,7 +83,7 @@ public class QueenTest {
         Position start = board.getPosition("D4");
         board.positionPiece(queen, "D4");
         Position end = board.getPosition("A1");
-        assertTrue(queen.canMoveTo(start, end, board));
+        assertTrue(queen.canMoveTo(end, board));
     }
 
     @Test
@@ -93,7 +93,7 @@ public class QueenTest {
         Position start = board.getPosition("A1");
         board.positionPiece(queen, "A1");
         Position end = board.getPosition("B1");
-        assertTrue(queen.canMoveTo(start, end, board));
+        assertTrue(queen.canMoveTo(end, board));
     }
 
 

@@ -109,7 +109,7 @@ public class KingTest {
         Position start = board.getPosition("A1");
         board.positionPiece(king, "A1");
         Position destination = board.getPosition("B1");
-        assertTrue(king.canMoveTo(start,destination, board));
+        assertTrue(king.canMoveTo(destination, board));
     }
 
     @Test
@@ -119,7 +119,7 @@ public class KingTest {
         Position start = board.getPosition("B1");
         board.positionPiece(king, "B1");
         Position destination = board.getPosition("A1");
-        assertTrue(king.canMoveTo(start,destination, board));
+        assertTrue(king.canMoveTo(destination, board));
     }
 
     @Test
@@ -129,7 +129,7 @@ public class KingTest {
         Position start = board.getPosition("A1");
         board.positionPiece(king, "A1");
         Position destination = board.getPosition("A2");
-        assertTrue(king.canMoveTo(start,destination, board));
+        assertTrue(king.canMoveTo(destination, board));
     }
     @Test
     public void testCanMakeMoveOneSpaceDown() {
@@ -138,7 +138,7 @@ public class KingTest {
         Position start = board.getPosition("A2");
         Position destination = board.getPosition("A1");
         board.positionPiece(king, "A2");
-        assertTrue(king.canMoveTo(start,destination, board));
+        assertTrue(king.canMoveTo(destination, board));
     }
 
     @Test
@@ -148,7 +148,7 @@ public class KingTest {
         Position start = board.getPosition("A1");
         board.positionPiece(king, "A1");
         Position destination = board.getPosition("B2");
-        assertTrue(king.canMoveTo(start,destination, board));
+        assertTrue(king.canMoveTo(destination, board));
     }
 
     @Test
@@ -158,7 +158,7 @@ public class KingTest {
         Position start = board.getPosition("B2");
         board.positionPiece(king, "B2");
         Position destination = board.getPosition("A1");
-        assertTrue(king.canMoveTo(start,destination, board));
+        assertTrue(king.canMoveTo(destination, board));
     }
 
     @Test
@@ -168,7 +168,7 @@ public class KingTest {
         Position start = board.getPosition("B1");
         board.positionPiece(king, "B1");
         Position destination = new Position("A2");
-        assertTrue(king.canMoveTo(start,destination, board));
+        assertTrue(king.canMoveTo(destination, board));
     }
 
     @Test
@@ -178,7 +178,7 @@ public class KingTest {
         Position start = board.getPosition("B2");
         board.positionPiece(king, "B2");
         Position destination = board.getPosition("C1");
-        assertTrue(king.canMoveTo(start,destination, board));
+        assertTrue(king.canMoveTo(destination, board));
     }
 
     @Test
@@ -188,7 +188,7 @@ public class KingTest {
         Position start = board.getPosition("A1");
         board.positionPiece(king, "A1");
         Position destination = new Position("A3");
-        assertFalse(king.canMoveTo(start,destination, board));
+        assertFalse(king.canMoveTo(destination, board));
     }
 
     @Test
@@ -198,7 +198,7 @@ public class KingTest {
         Position start = board.getPosition("A1");
         board.positionPiece(king, "A1");
         Position destination = board.getPosition("C1");
-        assertFalse(king.canMoveTo(start,destination, board));
+        assertFalse(king.canMoveTo(destination, board));
     }
 
     @Test
@@ -208,7 +208,7 @@ public class KingTest {
         Position start = board.getPosition("A1");
         board.positionPiece(king, "A1");
         Position destination = board.getPosition("C3");
-        assertFalse(king.canMoveTo(start,destination, board));
+        assertFalse(king.canMoveTo(destination, board));
     }
 
     @Test

@@ -21,7 +21,7 @@ public class PawnTest {
         Position start = board.getPosition("A1");
         Position destination = board.getPosition("A2");
         board.positionPiece(pawn, "A1");
-        assertTrue(pawn.canMoveTo(start, destination, board));
+        assertTrue(pawn.canMoveTo(destination, board));
     }
 
     @Test
@@ -31,7 +31,7 @@ public class PawnTest {
         Position start = board.getPosition("A1");
         Position destination = board.getPosition("A3");
         board.positionPiece(pawn, "A1");
-        assertTrue(pawn.canMoveTo(start, destination, board));
+        assertTrue(pawn.canMoveTo(destination, board));
     }
 
     @Test
@@ -41,7 +41,7 @@ public class PawnTest {
         Position start = board.getPosition("A1");
         Position destination = board.getPosition("A4");
         board.positionPiece(pawn, "A1");
-        assertFalse(pawn.canMoveTo(start, destination, board));
+        assertFalse(pawn.canMoveTo(destination, board));
     }
 
     @Test
@@ -52,7 +52,7 @@ public class PawnTest {
         Position destination = board.getPosition("B2");
         board.positionPiece(pawn, "A1");
         board.positionPiece(new Pawn(false), "B2");
-        assertTrue(pawn.canMoveTo(start, destination, board));
+        assertTrue(pawn.canMoveTo(destination, board));
     }
 
     @Test
@@ -63,7 +63,7 @@ public class PawnTest {
         Position destination = board.getPosition("A2");
         board.positionPiece(pawn, "B1");
         board.positionPiece(new Pawn(false), "A2");
-        assertTrue(pawn.canMoveTo(start, destination, board));
+        assertTrue(pawn.canMoveTo(destination, board));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class PawnTest {
         Position start = board.getPosition("A1");
         Position destination = board.getPosition("B2");
         board.positionPiece(pawn, "A1");
-        assertFalse(pawn.canMoveTo(start, destination, board));
+        assertFalse(pawn.canMoveTo(destination, board));
     }
 
     @Test
@@ -86,7 +86,7 @@ public class PawnTest {
         board.positionPiece(pawn, "A1");
         board.positionPiece(new Pawn(false), "A2");
         start.setPiece(pawn);
-        assertFalse(pawn.canMoveTo(start, destination, board));
+        assertFalse(pawn.canMoveTo(destination, board));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class PawnTest {
         Position start = board.getPosition("D7");
         Position destination = board.getPosition("D8");
         board.positionPiece(pawn, "D7");
-        assertFalse(pawn.canMoveTo(start, destination, board));
+        assertFalse(pawn.canMoveTo(destination, board));
     }
 
     @Test
@@ -106,7 +106,7 @@ public class PawnTest {
         Position start = board.getPosition("D6");
         Position destination = board.getPosition("D8");
         board.positionPiece(pawn, "D6");
-        assertFalse(pawn.canMoveTo(start, destination, board));
+        assertFalse(pawn.canMoveTo(destination, board));
     }
 
     @Test
@@ -116,7 +116,7 @@ public class PawnTest {
         Position start = board.getPosition("D7");
         Position destination = board.getPosition("D6");
         board.positionPiece(pawn, "D7");
-        assertTrue(pawn.canMoveTo(start, destination, board));
+        assertTrue(pawn.canMoveTo(destination, board));
     }
 
     @Test
@@ -126,7 +126,7 @@ public class PawnTest {
         Position start = board.getPosition("D7");
         Position destination = board.getPosition("D5");
         board.positionPiece(pawn, "D7");
-        assertTrue(pawn.canMoveTo(start, destination, board));
+        assertTrue(pawn.canMoveTo(destination, board));
     }
 
     @Test
@@ -136,7 +136,7 @@ public class PawnTest {
         Position start = board.getPosition("D7");
         Position destination = board.getPosition("D4");
         board.positionPiece(pawn, "D7");
-        assertFalse(pawn.canMoveTo(start, destination, board));
+        assertFalse(pawn.canMoveTo(destination, board));
     }
 
     @Test
@@ -147,7 +147,7 @@ public class PawnTest {
         Position destination = board.getPosition("C6");
         board.positionPiece(new Pawn(true), "C6");
         board.positionPiece(pawn, "D7");
-        assertTrue(pawn.canMoveTo(start, destination, board));
+        assertTrue(pawn.canMoveTo(destination, board));
     }
 
     @Test
@@ -159,7 +159,7 @@ public class PawnTest {
         board.positionPiece(pawn, "D7");
         board.positionPiece(new Pawn(true), "E6");
         start.setPiece(pawn);
-        assertTrue(pawn.canMoveTo(start, destination, board));
+        assertTrue(pawn.canMoveTo(destination, board));
     }
 
     @Test
@@ -170,7 +170,7 @@ public class PawnTest {
         Position destination = board.getPosition("D6");
         board.positionPiece(pawn, "D7");
         board.positionPiece(new Pawn(true), "D6");
-        assertFalse(pawn.canMoveTo(start, destination, board));
+        assertFalse(pawn.canMoveTo(destination, board));
     }
 
 
@@ -208,7 +208,7 @@ public class PawnTest {
         pawn.moveTo(start, destination);
         start = destination;
         destination = board.getPosition("A5");
-        assertFalse(pawn.canMoveTo(start, destination, board));
+        assertFalse(pawn.canMoveTo(destination, board));
     }
 
     @Test

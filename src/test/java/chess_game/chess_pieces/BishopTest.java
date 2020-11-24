@@ -27,7 +27,7 @@ public class BishopTest {
         Position start = board.getPosition("A1");
         board.positionPiece(bishop, "A1");
         Position destination = board.getPosition("B2");
-        assertTrue(bishop.canMoveTo(start, destination, board));
+        assertTrue(bishop.canMoveTo(destination, board));
     }
 
     @Test
@@ -37,7 +37,7 @@ public class BishopTest {
         Position start = board.getPosition("D4");
         board.positionPiece(bishop, "D4");
         Position destination = board.getPosition("C3");
-        assertTrue(bishop.canMoveTo(start, destination, board));
+        assertTrue(bishop.canMoveTo(destination, board));
     }
 
     @Test
@@ -47,7 +47,7 @@ public class BishopTest {
         Position start = board.getPosition("A1");
         board.positionPiece(bishop, "A1");
         Position destination = board.getPosition("H8");
-        assertTrue(bishop.canMoveTo(start, destination, board));
+        assertTrue(bishop.canMoveTo(destination, board));
     }
 
     @Test
@@ -57,7 +57,7 @@ public class BishopTest {
         Position start = board.getPosition("H8");
         board.positionPiece(bishop, "H8");
         Position destination = board.getPosition("A1");
-        assertTrue(bishop.canMoveTo(start, destination, board));
+        assertTrue(bishop.canMoveTo(destination, board));
     }
 
 

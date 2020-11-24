@@ -35,7 +35,9 @@ public abstract class Piece {
     }
 
 
-    public abstract boolean canMoveTo(Position start, Position destination, ChessBoard board);
+    public boolean canMoveTo(Position destination, ChessBoard board) {
+        return this.getLegalMovePositions(board).contains(destination);
+    }
 
     public  abstract List<Position> getLegalMovePositions(ChessBoard board);
 
