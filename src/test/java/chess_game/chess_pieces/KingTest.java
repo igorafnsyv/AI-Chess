@@ -8,6 +8,8 @@ import static org.junit.Assert.*;
 
 public class KingTest {
 
+
+
     @Test
     public void testIsCheckedFalseWhenSameColorQueenOnTheLeft() {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
@@ -77,6 +79,26 @@ public class KingTest {
         Queen queen = new Queen(true);
         board.positionPiece(king, "A1");
         board.positionPiece(queen, "C3");
+        assertTrue(king.isChecked(board));
+    }
+
+    @Test
+    public void testIsCheckedWhenUpperLeftDiagonal() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        King king = new King(false);
+        Queen queen = new Queen(true);
+        board.positionPiece(king, "C1");
+        board.positionPiece(queen, "A3");
+        assertTrue(king.isChecked(board));
+    }
+
+    @Test
+    public void testIsCheckedWhenLowerRight() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        King king = new King(false);
+        Queen queen = new Queen(true);
+        board.positionPiece(king, "C3");
+        board.positionPiece(queen, "E1");
         assertTrue(king.isChecked(board));
     }
 
@@ -197,6 +219,22 @@ public class KingTest {
         King king = (King) board.getPosition("E1").getPiece();
         assertFalse(king.isChecked(board));
         assertFalse(king.isMate(board));
+    }
+
+
+
+    @Test
+    public void testIsMateReturnsTrueWhenCheckedAndNoMove() {
+        ChessBoard board = ChessBoard.initializeBoard();
+        King king = (King) board.getPosition("E8").getPiece();
+        Knight knight = (Knight) board.getPosition("G1").getPiece();
+        knight.moveTo(knight.getPosition(), board.getPosition("D6"));
+        System.out.println(board);
+        System.out.println(knight.getPosition());
+        System.out.println(king.getPosition());
+        assertTrue(king.isChecked(board));
+
+
     }
 
 

@@ -23,7 +23,6 @@ public class King extends Piece {
     }
 
 
-    //TODO: store position in piece and get position object from
     public boolean isChecked(ChessBoard board) {
         this.checked = isCheckable(this.getPosition(), board);
         return checked;
@@ -35,13 +34,16 @@ public class King extends Piece {
         char column = position.charAt(0);
         char row = position.charAt(1);
 
+
         // Checking same row, columns on the left
         for (char currentCol = (char) (column - 1); currentCol >= 'A'; currentCol--) {
             Position currentPosition = board.getPosition("" + currentCol + row);
             Piece piece = currentPosition.getPiece();
             if (piece != null) {
-                if (piece.isWhite() == this.isWhite()) return false;
-                return piece.canMoveTo(currentPosition, pos, board);
+                if (piece.isWhite() == this.isWhite()) break;
+                if( piece.canMoveTo(currentPosition, pos, board)) {
+                     return true;
+                }
             }
         }
 
@@ -50,56 +52,129 @@ public class King extends Piece {
             Position currentPosition = board.getPosition("" + currentCol + row);
             Piece piece = currentPosition.getPiece();
             if (piece != null) {
-                if (piece.isWhite() == this.isWhite()) return false;
-                return piece.canMoveTo(currentPosition, pos, board);
+                if (piece.isWhite() == this.isWhite()) break;
+                if (piece.canMoveTo(currentPosition, pos, board)) {
+                    return true;
+                }
+
             }
         }
-
         // Checking same column, rows below
         for (char currentRow = (char) (row - 1); currentRow >= '1'; currentRow--) {
             Position currentPosition = board.getPosition("" + column + currentRow);
             Piece piece = currentPosition.getPiece();
+            System.out.println(piece);
             if (piece != null) {
-                if (piece.isWhite() == this.isWhite()) return false;
-                return piece.canMoveTo(currentPosition, pos, board);
+                if (piece.isWhite() == this.isWhite()) break;
+                if (piece.canMoveTo(currentPosition, pos, board)){
+                    return true;
+                }
             }
         }
+
         // Checking same column, rows above
         for (char currentRow = (char) (row + 1); currentRow <= '8'; currentRow++) {
             Position currentPosition = board.getPosition("" + column + currentRow);
             Piece piece = currentPosition.getPiece();
             if (piece != null) {
-                if (piece.isWhite() == this.isWhite()) return false;
-                return piece.canMoveTo(currentPosition, pos, board);
+                if (piece.isWhite() == this.isWhite()) break;
+                if (piece.canMoveTo(currentPosition, pos, board)) {
+                    return true;
+                }
             }
         }
 
 
-        // Checking from diagonal below
+        // Check from Knight attack
+        List<Position> knightPositionList = new ArrayList<>();
+        String knightPosition = String.valueOf((char) (column - 1)) + ((char) (row + 2));
+        knightPositionList.add(board.getPosition(knightPosition));
+        knightPosition = String.valueOf((char) (column + 1)) + ((char) (row + 2));
+        knightPositionList.add(board.getPosition(knightPosition));
+        knightPosition = String.valueOf((char) (column + 2)) + ((char) (row + 1));
+        knightPositionList.add(board.getPosition(knightPosition));
+        knightPosition = String.valueOf((char) (column + 2)) + ((char) (row - 1));
+        knightPositionList.add(board.getPosition(knightPosition));
+        knightPosition = String.valueOf((char) (column + 1)) + ((char) (row - 2));
+        knightPositionList.add(board.getPosition(knightPosition));
+        knightPosition = String.valueOf((char) (column - 1)) + ((char) (row - 2));
+        knightPositionList.add(board.getPosition(knightPosition));
+        knightPosition = String.valueOf((char) (column - 2)) + ((char) (row - 1));
+        knightPositionList.add(board.getPosition(knightPosition));
+        knightPosition = String.valueOf((char) (column - 2)) + ((char) (row + 1));
+        knightPositionList.add(board.getPosition(knightPosition));
+        knightPositionList = knightPositionList.stream()
+                //knight must be of opposite color
+                .filter((positionEntry) -> positionEntry != null && positionEntry.getPiece() instanceof Knight)
+                .collect(Collectors.toList());
+        System.out.println(knightPositionList);
+        if (knightPositionList.size() != 0) return true;
+
+
+
+
+        // Checking from left low diagonal
         char currentRow = (char) (row - 1);
         char currentColumn = (char) (column - 1);
         while (currentColumn >= 'A' && currentRow >= '1') {
             Position currentPosition = board.getPosition("" + currentColumn + currentRow);
             Piece piece = currentPosition.getPiece();
             if (piece != null) {
-                if (piece.isWhite() == this.isWhite()) return false;
-                return piece.canMoveTo(currentPosition, pos, board);
+                if (piece.isWhite() == this.isWhite()) break;
+                if (piece.canMoveTo(currentPosition, pos, board)) {
+                    return true;
+                }
             }
             currentRow--;
             currentColumn--;
         }
 
+        // Checking from right low diagonal
+        currentRow = (char) (row - 1);
+        currentColumn = (char) (column + 1);
+        while (currentColumn <= 'H' && currentRow >= '1') {
+            Position currentPosition = board.getPosition("" + currentColumn + currentRow);
+            Piece piece = currentPosition.getPiece();
+            if (piece != null) {
+                if (piece.isWhite() == this.isWhite()) break;
+                if (piece.canMoveTo(currentPosition, pos, board)) {
+                    return true;
+                }
+            }
+            currentRow--;
+            currentColumn++;
+        }
+
+        //Checking from diagonal right above
         currentRow = (char) (row + 1);
         currentColumn = (char) (column + 1);
         while (currentColumn <= 'H' && currentRow <= '8') {
             Position currentPosition = board.getPosition("" + currentColumn + currentRow);
             Piece piece = currentPosition.getPiece();
             if (piece != null) {
-                if (piece.isWhite() == this.isWhite()) return false;
-                return piece.canMoveTo(currentPosition, pos, board);
+                if (piece.isWhite() == this.isWhite()) break;
+                if (piece.canMoveTo(currentPosition, pos, board)) {
+                    return true;
+                }
             }
             currentRow++;
             currentColumn++;
+        }
+
+        //Checking from diagonal left above
+        currentRow = (char) (row + 1);
+        currentColumn = (char) (column - 1);
+        while (currentColumn >= 'A' && currentRow >= '1') {
+            Position currentPosition = board.getPosition("" + currentColumn + currentRow);
+            Piece piece = currentPosition.getPiece();
+            if (piece != null) {
+                if (piece.isWhite() == this.isWhite()) break;
+                if (piece.canMoveTo(currentPosition, pos, board)) {
+                    return true;
+                }
+            }
+            currentRow++;
+            currentColumn--;
         }
 
         return false;

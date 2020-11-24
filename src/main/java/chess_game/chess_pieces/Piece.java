@@ -29,6 +29,7 @@ public abstract class Piece {
     public void moveTo(Position start, Position destination) {
         start.setPiece(null);
         destination.setPiece(this);
+        this.position = destination;
     }
 
 

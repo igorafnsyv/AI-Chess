@@ -18,9 +18,9 @@ public class KnightTest {
     public void testCanMoveTo2Forward1Right(){
         Knight knight = new Knight(true);
         ChessBoard board = ChessBoard.initializeEmptyBoard();
-        Position start = board.getPosition("A1");
+        Position start = board.getPosition("E4");
         start.setPiece(knight);
-        Position end = board.getPosition("B3");
+        Position end = board.getPosition("F6");
         assertTrue(knight.canMoveTo(start, end, board));
     }
 
@@ -30,7 +30,7 @@ public class KnightTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("E4");
         start.setPiece(knight);
-        Position end = board.getPosition("F6");
+        Position end = board.getPosition("D6");
         assertTrue(knight.canMoveTo(start, end, board));
     }
 
