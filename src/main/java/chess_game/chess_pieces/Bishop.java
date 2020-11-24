@@ -15,7 +15,6 @@ public class Bishop extends Piece {
 
     @Override
     public boolean canMoveTo(Position start, Position destination, ChessBoard board) {
-        if (!start.getPiece().equals(this)) return false;
         return this.getLegalMovePositions(board).contains(destination);
 
     }

@@ -19,7 +19,7 @@ public class KnightTest {
         Knight knight = new Knight(true);
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("E4");
-        start.setPiece(knight);
+        board.positionPiece(knight, "E4");
         Position end = board.getPosition("F6");
         assertTrue(knight.canMoveTo(start, end, board));
     }
@@ -29,7 +29,7 @@ public class KnightTest {
         Knight knight = new Knight(true);
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("E4");
-        start.setPiece(knight);
+        board.positionPiece(knight, "E4");
         Position end = board.getPosition("D6");
         assertTrue(knight.canMoveTo(start, end, board));
     }
@@ -39,7 +39,7 @@ public class KnightTest {
         Knight knight = new Knight(true);
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("E4");
-        start.setPiece(knight);
+        board.positionPiece(knight, "E4");
         Position end = board.getPosition("C5");
         assertTrue(knight.canMoveTo(start, end, board));
     }
@@ -49,7 +49,7 @@ public class KnightTest {
         Knight knight = new Knight(true);
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("E4");
-        start.setPiece(knight);
+        board.positionPiece(knight, "E4");
         Position end = board.getPosition("G5");
         assertTrue(knight.canMoveTo(start, end, board));
     }
@@ -59,7 +59,7 @@ public class KnightTest {
         Knight knight = new Knight(true);
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("E4");
-        start.setPiece(knight);
+        board.positionPiece(knight, "E4");
         Position end = board.getPosition("G3");
         assertTrue(knight.canMoveTo(start, end, board));
     }
@@ -69,7 +69,7 @@ public class KnightTest {
         Knight knight = new Knight(true);
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("E4");
-        start.setPiece(knight);
+        board.positionPiece(knight, "E4");
         Position end = board.getPosition("C3");
         assertTrue(knight.canMoveTo(start, end, board));
     }
@@ -79,7 +79,7 @@ public class KnightTest {
         Knight knight = new Knight(true);
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("E4");
-        start.setPiece(knight);
+        board.positionPiece(knight, "E4");
         Position end = board.getPosition("F2");
         assertTrue(knight.canMoveTo(start, end, board));
     }
@@ -89,7 +89,7 @@ public class KnightTest {
         Knight knight = new Knight(true);
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("E4");
-        start.setPiece(knight);
+        board.positionPiece(knight, "E4");
         Position end = board.getPosition("D2");
         assertTrue(knight.canMoveTo(start, end, board));
     }

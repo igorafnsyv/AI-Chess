@@ -20,7 +20,7 @@ public class PawnTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
         Position destination = board.getPosition("A2");
-        start.setPiece(pawn);
+        board.positionPiece(pawn, "A1");
         assertTrue(pawn.canMoveTo(start, destination, board));
     }
 
@@ -30,7 +30,7 @@ public class PawnTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
         Position destination = board.getPosition("A3");
-        start.setPiece(pawn);
+        board.positionPiece(pawn, "A1");
         assertTrue(pawn.canMoveTo(start, destination, board));
     }
 
@@ -40,7 +40,7 @@ public class PawnTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
         Position destination = board.getPosition("A4");
-        start.setPiece(pawn);
+        board.positionPiece(pawn, "A1");
         assertFalse(pawn.canMoveTo(start, destination, board));
     }
 
@@ -50,8 +50,8 @@ public class PawnTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
         Position destination = board.getPosition("B2");
-        start.setPiece(pawn);
-        destination.setPiece(new Pawn(false));
+        board.positionPiece(pawn, "A1");
+        board.positionPiece(new Pawn(false), "B2");
         assertTrue(pawn.canMoveTo(start, destination, board));
     }
 
@@ -61,8 +61,8 @@ public class PawnTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("B1");
         Position destination = board.getPosition("A2");
-        start.setPiece(pawn);
-        destination.setPiece(new Pawn(false));
+        board.positionPiece(pawn, "B1");
+        board.positionPiece(new Pawn(false), "A2");
         assertTrue(pawn.canMoveTo(start, destination, board));
     }
 
@@ -72,7 +72,7 @@ public class PawnTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("A1");
         Position destination = board.getPosition("B2");
-        start.setPiece(pawn);
+        board.positionPiece(pawn, "A1");
         assertFalse(pawn.canMoveTo(start, destination, board));
     }
 
@@ -83,7 +83,8 @@ public class PawnTest {
         Position start = board.getPosition("A1");
         Position destination = board.getPosition("A3");
         Position middle = board.getPosition("A2");
-        middle.setPiece(new Pawn(false));
+        board.positionPiece(pawn, "A1");
+        board.positionPiece(new Pawn(false), "A2");
         start.setPiece(pawn);
         assertFalse(pawn.canMoveTo(start, destination, board));
     }
@@ -94,7 +95,7 @@ public class PawnTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("D7");
         Position destination = board.getPosition("D8");
-        start.setPiece(pawn);
+        board.positionPiece(pawn, "D7");
         assertFalse(pawn.canMoveTo(start, destination, board));
     }
 
@@ -104,7 +105,7 @@ public class PawnTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("D6");
         Position destination = board.getPosition("D8");
-        start.setPiece(pawn);
+        board.positionPiece(pawn, "D6");
         assertFalse(pawn.canMoveTo(start, destination, board));
     }
 
@@ -114,7 +115,7 @@ public class PawnTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("D7");
         Position destination = board.getPosition("D6");
-        start.setPiece(pawn);
+        board.positionPiece(pawn, "D7");
         assertTrue(pawn.canMoveTo(start, destination, board));
     }
 
@@ -124,7 +125,7 @@ public class PawnTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("D7");
         Position destination = board.getPosition("D5");
-        start.setPiece(pawn);
+        board.positionPiece(pawn, "D7");
         assertTrue(pawn.canMoveTo(start, destination, board));
     }
 
@@ -134,7 +135,7 @@ public class PawnTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("D7");
         Position destination = board.getPosition("D4");
-        start.setPiece(pawn);
+        board.positionPiece(pawn, "D7");
         assertFalse(pawn.canMoveTo(start, destination, board));
     }
 
@@ -144,8 +145,8 @@ public class PawnTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("D7");
         Position destination = board.getPosition("C6");
-        destination.setPiece(new Pawn(true));
-        start.setPiece(pawn);
+        board.positionPiece(new Pawn(true), "C6");
+        board.positionPiece(pawn, "D7");
         assertTrue(pawn.canMoveTo(start, destination, board));
     }
 
@@ -155,7 +156,8 @@ public class PawnTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("D7");
         Position destination = board.getPosition("E6");
-        destination.setPiece(new Pawn(true));
+        board.positionPiece(pawn, "D7");
+        board.positionPiece(new Pawn(true), "E6");
         start.setPiece(pawn);
         assertTrue(pawn.canMoveTo(start, destination, board));
     }
@@ -166,8 +168,8 @@ public class PawnTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         Position start = board.getPosition("D7");
         Position destination = board.getPosition("D6");
-        destination.setPiece(new Pawn(true));
-        start.setPiece(pawn);
+        board.positionPiece(pawn, "D7");
+        board.positionPiece(new Pawn(true), "D6");
         assertFalse(pawn.canMoveTo(start, destination, board));
     }
 
@@ -208,6 +210,46 @@ public class PawnTest {
         destination = board.getPosition("A5");
         assertFalse(pawn.canMoveTo(start, destination, board));
     }
+
+    @Test
+    public void testGetLegalMoves() {
+        Pawn pawn = new Pawn(true);
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        board.positionPiece(pawn, "A2");
+        assertEquals(2, pawn.getLegalMovePositions(board).size());
+    }
+
+    @Test
+    public void testGetLegalMovesWhenOpponentOnLeft() {
+        Pawn pawn = new Pawn(true);
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        board.positionPiece(pawn, "A2");
+        board.positionPiece(new Pawn(false), "B3");
+        assertEquals(3, pawn.getLegalMovePositions(board).size());
+    }
+
+    @Test
+    public void testGetLegalMovesWhenOpponentOnLeftAndRight() {
+        Pawn pawn = new Pawn(true);
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        board.positionPiece(pawn, "B2");
+        board.positionPiece(new Pawn(false), "C3");
+        board.positionPiece(new Pawn(false), "A3");
+        assertEquals(4, pawn.getLegalMovePositions(board).size());
+    }
+
+    @Test
+    public void testGetLegalMovesWhenAllOccupied() {
+        Pawn pawn = new Pawn(true);
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        board.positionPiece(pawn, "B2");
+        board.positionPiece(new Pawn(true), "B3");
+        board.positionPiece(new Pawn(true), "C3");
+        board.positionPiece(new Pawn(true), "A3");
+        assertEquals(0, pawn.getLegalMovePositions(board).size());
+    }
+
+
 
 
 }

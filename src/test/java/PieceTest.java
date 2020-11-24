@@ -1,5 +1,7 @@
+import chess_game.ChessBoard;
 import chess_game.Position;
 import chess_game.chess_pieces.King;
+import chess_game.chess_pieces.Pawn;
 import chess_game.chess_pieces.Piece;
 import org.junit.Test;
 
@@ -49,50 +51,57 @@ public class PieceTest {
 
     @Test
     public void testCanMoveToReturnTrue() {
-        Position position = new Position("A1");
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        Position position = board.getPosition("A1");
         Piece piece = new King(false);
-        position.setPiece(piece);
-        Position newPosition = new Position("A2");
-        assertTrue(piece.canMoveTo(position, newPosition, null));
+        board.positionPiece(piece, "A1");
+        Position newPosition = board.getPosition("A2");
+        assertTrue(piece.canMoveTo(position, newPosition, board));
     }
 
     @Test
     public void testCanMoveReturnFalseWhenNoPieceInStart() {
-        Position start = new Position("A1");
-        Position destination = new Position("A2");
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        Position start = board.getPosition("A1");
+        Position destination = board.getPosition("A2");
         Piece piece = new King(false);
-        assertThrows(NullPointerException.class,() -> piece.canMoveTo(start, destination, null));
+
+        assertThrows(NullPointerException.class,() -> piece.canMoveTo(start, destination, board));
     }
 
     @Test
     public void testCanMoveToSamePositionReturnFalse() {
-        Position start = new Position("A1");
-        Position destination = new Position("A1");
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        Position start = board.getPosition("A1");
+        Position destination = board.getPosition("A1");
         Piece piece = new King(false);
-        start.setPiece(piece);
-        assertFalse(piece.canMoveTo(start, destination, null));
+        board.positionPiece(piece, "A1");
+        assertFalse(piece.canMoveTo(start, destination, board));
     }
 
     @Test
     public void testCanMoveToSamePositionReturnsFalseIfSameColorOccupies() {
-        Position start = new Position("A1");
-        Position destination = new Position("A2");
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        Position start = board.getPosition("A1");
+        Position destination = board.getPosition("A2");
         Piece piece = new King(false);
         Piece piece1 = new King(false);
-        start.setPiece(piece);
-        destination.setPiece(piece1);
-        assertFalse(piece.canMoveTo(start, destination, null));
+
+        board.positionPiece(piece, "A1");
+        board.positionPiece(piece1, "A2");
+        assertFalse(piece.canMoveTo(start, destination, board));
     }
 
     @Test
     public void testCanMoveToSamePositionReturnsTrueIfDifferentColorOccupies() {
-        Position start = new Position("A1");
-        Position destination = new Position("A2");
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        Position start = board.getPosition("A1");
+        Position destination = board.getPosition("A2");
         Piece piece = new King(false);
-        Piece piece1 = new King(true);
-        start.setPiece(piece);
-        destination.setPiece(piece1);
-        assertTrue(piece.canMoveTo(start, destination, null));
+        board.positionPiece(piece, "A1");
+        board.positionPiece(new Pawn(true), "A2");
+
+        assertTrue(piece.canMoveTo(start, destination, board));
     }
 
     @Test

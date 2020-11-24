@@ -3,6 +3,7 @@ package chess_game.chess_pieces;
 import chess_game.ChessBoard;
 import chess_game.Position;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends Piece {
@@ -13,21 +14,102 @@ public class Rook extends Piece {
 
     @Override
     public boolean canMoveTo(Position start, Position destination, ChessBoard board) {
-        if (start.getPiece() != this) return false;
-        // Rook can move only vertically, horizontally
-        if (!canReach(start, destination)) return false;
-        if (!allBetweenPositionsFree(start, destination, board)) return false;
-        boolean destinationFree = destination.getPiece() == null;
-        boolean result = true;
-        if (!destinationFree) {
-            if (destination.getPiece().isWhite() == this.isWhite()) result = false;
-        }
-        return result;
+        return this.getLegalMovePositions(board).contains(destination);
     }
 
     @Override
     public List<Position> getLegalMovePositions(ChessBoard board) {
-        return null;
+        List<Position> positions = new ArrayList<>();
+
+        //top vertical
+        char startCol = getPosition().toString().charAt(0);
+        char startRow = getPosition().toString().charAt(1);
+        int colStep = 0;
+        int rowStep = 1;
+        char currentCol = (char) (startCol + colStep);
+        char currentRow = (char) (startRow + rowStep);
+        while (currentRow <= '8') {
+            String potentialPosition = String.valueOf(currentCol) + currentRow;
+            Position position = board.getPosition(potentialPosition);
+            Piece positionPiece = position.getPiece();
+            if (positionPiece == null) {
+                positions.add(position);
+            } else  if (positionPiece.isWhite() != this.isWhite()){
+                positions.add(position);
+                break;
+            } else {
+                break;
+            }
+            currentCol = (char) (currentCol + colStep);
+            currentRow = (char) (currentRow + rowStep);
+        }
+
+        //bottom vertical
+        colStep = 0;
+        rowStep = -1;
+        currentCol = (char) (startCol + colStep);
+        currentRow = (char) (startRow + rowStep);
+        while (currentRow >= '1') {
+            String potentialPosition = String.valueOf(currentCol) + currentRow;
+            Position position = board.getPosition(potentialPosition);
+            Piece positionPiece = position.getPiece();
+            if (positionPiece == null) {
+                positions.add(position);
+            } else  if (positionPiece.isWhite() != this.isWhite()){
+                positions.add(position);
+                break;
+            } else {
+                break;
+            }
+            currentCol = (char) (currentCol + colStep);
+            currentRow = (char) (currentRow + rowStep);
+        }
+
+        //left horizontal
+        colStep = -1;
+        rowStep = 0;
+        currentCol = (char) (startCol + colStep);
+        currentRow = (char) (startRow + rowStep);
+        while (currentCol >= 'A') {
+            String potentialPosition = String.valueOf(currentCol) + currentRow;
+            Position position = board.getPosition(potentialPosition);
+            Piece positionPiece = position.getPiece();
+            if (positionPiece == null) {
+                positions.add(position);
+            } else  if (positionPiece.isWhite() != this.isWhite()){
+                positions.add(position);
+                break;
+            } else {
+                break;
+            }
+            currentCol = (char) (currentCol + colStep);
+            currentRow = (char) (currentRow + rowStep);
+        }
+
+        //right horizontal
+
+        colStep = 1;
+        rowStep = 0;
+        currentCol = (char) (startCol + colStep);
+        currentRow = (char) (startRow + rowStep);
+        while (currentCol <= 'H') {
+            String potentialPosition = String.valueOf(currentCol) + currentRow;
+            Position position = board.getPosition(potentialPosition);
+            Piece positionPiece = position.getPiece();
+            if (positionPiece == null) {
+                positions.add(position);
+            } else  if (positionPiece.isWhite() != this.isWhite()){
+                positions.add(position);
+                break;
+            } else {
+                break;
+            }
+            currentCol = (char) (currentCol + colStep);
+            currentRow = (char) (currentRow + rowStep);
+        }
+
+
+        return positions;
     }
 
     @Override
@@ -35,49 +117,5 @@ public class Rook extends Piece {
         String color = super.toString();
         return color + "R";
     }
-
-    private boolean canReach(Position start, Position destination) {
-        boolean result = false;
-        if (start.columnDistanceTo(destination) != -1 || start.rowDistanceTo(destination) != -1) {
-            result  = true;
-        }
-        return result;
-    }
-
-    private boolean allBetweenPositionsFree(Position start, Position destination, ChessBoard board) {
-        String position1 = start.toString();
-        char startCol = position1.charAt(0);
-        char startRow = position1.charAt(1);
-
-        String position2 = destination.toString();
-        char destinationCol = position2.charAt(0);
-        char destinationRow = position2.charAt(1);
-
-        int colStep = 0;
-        int rowStep = 0;
-
-        if (startCol == destinationCol) {
-            rowStep = 1;
-        }
-        else if (startRow == destinationRow) {
-            colStep = 1;
-        }
-
-        // in this case we are moving left
-        if (startRow > destinationRow) {
-            rowStep = -rowStep;
-        }
-        //or moving down
-        else if (startCol > destinationCol) {
-            colStep = -colStep;
-        }
-
-        for (int i = 0; i < start.distanceTo(destination) - 1; i++) {
-            Position position = board.getPosition(String.valueOf( startCol += colStep) + String.valueOf(startRow += rowStep));
-            if (position.getPiece() != null) return false;
-        }
-        return true;
-    }
-
 
 }

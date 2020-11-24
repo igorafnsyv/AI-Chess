@@ -72,7 +72,6 @@ public class BishopTest {
         Bishop bishop = new Bishop(false);
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         board.positionPiece(bishop, "D3");
-        System.out.println(bishop.getLegalMovePositions(board).size());
         assertEquals(bishop.getLegalMovePositions(board).size(), 11);
     }
 
@@ -91,7 +90,6 @@ public class BishopTest {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         board.positionPiece(bishop, "D3");
         board.positionPiece(new Pawn(true), "G6");
-        System.out.println(bishop.getLegalMovePositions(board));
         assertEquals(bishop.getLegalMovePositions(board).size(), 10);
     }
 
@@ -102,7 +100,6 @@ public class BishopTest {
         board.positionPiece(bishop, "D3");
         board.positionPiece(new Pawn(true), "G6");
         board.positionPiece(new Pawn(true), "C4");
-        System.out.println(bishop.getLegalMovePositions(board));
         assertEquals(bishop.getLegalMovePositions(board).size(), 8);
     }
 

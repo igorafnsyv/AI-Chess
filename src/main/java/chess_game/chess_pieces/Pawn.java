@@ -3,6 +3,7 @@ package chess_game.chess_pieces;
 import chess_game.ChessBoard;
 import chess_game.Position;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -30,59 +31,43 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMoveTo(Position start, Position destination, ChessBoard board) {
-        if (start == destination) return false;
-        if (start.getPiece() != this) return false;
-        if (!canReach(start, destination)) return false;
-        if (!allBetweenPositionsFree(start, destination, board)) return false;
-        boolean result;
-        //White pawn can only move up
-        if (this.isWhite()) {
-            result = start.toString().charAt(1) < destination.toString().charAt(1);
-
-        //Black pawn can only move down
-        } else {
-            result = start.toString().charAt(1) > destination.toString().charAt(1);
-        }
-
-        //If it is a diagonal move, destination needs to contain piece of opposite color
-        if (start.diagonalDistanceTo(destination) == 1) {
-            //No diagonal move when no enemy
-            if (destination.getPiece() == null) return false;
-            result = result && (this.isWhite() != destination.getPiece().isWhite());
-        } else if (start.rowDistanceTo(destination) <= 2) {
-            result = result && destination.getPiece() == null;
-        }
-
-        return result;
+        return this.getLegalMovePositions(board).contains(destination);
     }
 
     @Override
     public List<Position> getLegalMovePositions(ChessBoard board) {
-        return null;
-    }
+        List<Position> positions = new ArrayList<>();
+        char currentColumn = this.getPosition().toString().charAt(0);
+        char currentRow = this.getPosition().toString().charAt(1);
 
-    private boolean canReach(Position start, Position destination) {
-        boolean result = false;
-        if (!madeFirstMove) {
-            int rowDistance = start.rowDistanceTo(destination);
-            result = rowDistance == 1 || rowDistance == 2 ;
+        int offset = 1;
+        //Black pawns move only down
+        //White pawns move only up
+        if (!this.isWhite()) {
+            offset = -1;
         }
-        result = result || start.rowDistanceTo(destination) == 1;
-        if (start.diagonalDistanceTo(destination) == 1) {
-            result = true;
-        }
-        return result;
-    }
+        //Can make move forward only if next square is empty
+        Position pos = board.getPosition(currentColumn + String.valueOf((char)(currentRow + offset)));
 
-    public boolean allBetweenPositionsFree(Position start, Position destination, ChessBoard board) {
-        char[] startChars = start.toString().toCharArray();
-        char[] destinationChars = destination.toString().toCharArray();
-
-        int verticalDistance = Math.abs(destinationChars[1] - startChars[1]);
-        for (int i = 1; i < verticalDistance; i++) {
-            Position position = board.getPosition(String.valueOf(startChars[0]) + (char)(startChars[1] + i));
-            if (position.getPiece() != null) return false;
+        if (pos != null && pos.getPiece() == null) {
+            positions.add(pos);
+            //If the first move was not made pawn can move 2 square
+            if (!madeFirstMove) {
+                Position extraPos = board.getPosition(currentColumn + String.valueOf((char)(currentRow + (2 * offset))));
+                if (extraPos != null && extraPos.getPiece() == null) {
+                    positions.add(extraPos);
+                }
+            }
         }
-        return true;
+        pos = board.getPosition(((char) (currentColumn + 1)) + String.valueOf((char)(currentRow + offset)));
+        if (pos != null && pos.getPiece() != null && pos.getPiece().isWhite() != this.isWhite()) {
+            positions.add(pos);
+        }
+        pos = board.getPosition(((char) (currentColumn - 1)) + String.valueOf((char)(currentRow + offset)));
+        if (pos != null && pos.getPiece() != null && pos.getPiece().isWhite() != this.isWhite()) {
+            positions.add(pos);
+        }
+
+        return positions;
     }
 }

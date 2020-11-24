@@ -104,100 +104,111 @@ public class KingTest {
 
     @Test
     public void testCanMakeMoveWithOneSpaceRight() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
-        Position start = new Position("A1");
-        start.setPiece(king);
-        Position destination = new Position("B1");
-        assertTrue(king.canMoveTo(start,destination, null));
+        Position start = board.getPosition("A1");
+        board.positionPiece(king, "A1");
+        Position destination = board.getPosition("B1");
+        assertTrue(king.canMoveTo(start,destination, board));
     }
 
     @Test
     public void testCanMakeMoveWithOneSpaceLeft() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
-        Position start = new Position("B1");
-        start.setPiece(king);
-        Position destination = new Position("A1");
-        assertTrue(king.canMoveTo(start,destination, null));
+        Position start = board.getPosition("B1");
+        board.positionPiece(king, "B1");
+        Position destination = board.getPosition("A1");
+        assertTrue(king.canMoveTo(start,destination, board));
     }
 
     @Test
     public void testCanMakeMoveOneSpaceUp() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
-        Position start = new Position("A1");
-        start.setPiece(king);
-        Position destination = new Position("A2");
-        assertTrue(king.canMoveTo(start,destination, null));
+        Position start = board.getPosition("A1");
+        board.positionPiece(king, "A1");
+        Position destination = board.getPosition("A2");
+        assertTrue(king.canMoveTo(start,destination, board));
     }
     @Test
     public void testCanMakeMoveOneSpaceDown() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
-        Position start = new Position("A2");
-        start.setPiece(king);
-        Position destination = new Position("A1");
-        assertTrue(king.canMoveTo(start,destination, null));
+        Position start = board.getPosition("A2");
+        Position destination = board.getPosition("A1");
+        board.positionPiece(king, "A2");
+        assertTrue(king.canMoveTo(start,destination, board));
     }
 
     @Test
     public void testCanMakeMoveDiagonally() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
-        Position start = new Position("A1");
-        start.setPiece(king);
-        Position destination = new Position("B2");
-        assertTrue(king.canMoveTo(start,destination, null));
+        Position start = board.getPosition("A1");
+        board.positionPiece(king, "A1");
+        Position destination = board.getPosition("B2");
+        assertTrue(king.canMoveTo(start,destination, board));
     }
 
     @Test
     public void testCanMakeMoveDiagonallyDown() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
-        Position start = new Position("B2");
-        start.setPiece(king);
-        Position destination = new Position("A1");
-        assertTrue(king.canMoveTo(start,destination, null));
+        Position start = board.getPosition("B2");
+        board.positionPiece(king, "B2");
+        Position destination = board.getPosition("A1");
+        assertTrue(king.canMoveTo(start,destination, board));
     }
 
     @Test
     public void testCanMakeMoveDiagonallyUpLeft() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
-        Position start = new Position("B1");
-        start.setPiece(king);
+        Position start = board.getPosition("B1");
+        board.positionPiece(king, "B1");
         Position destination = new Position("A2");
-        assertTrue(king.canMoveTo(start,destination, null));
+        assertTrue(king.canMoveTo(start,destination, board));
     }
 
     @Test
     public void testCanMakeMoveDiagonallyDownRight() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
-        Position start = new Position("B2");
-        start.setPiece(king);
-        Position destination = new Position("C1");
-        assertTrue(king.canMoveTo(start,destination, null));
+        Position start = board.getPosition("B2");
+        board.positionPiece(king, "B2");
+        Position destination = board.getPosition("C1");
+        assertTrue(king.canMoveTo(start,destination, board));
     }
 
     @Test
     public void testCanMakeMoveTwoUpReturnsFalse() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
-        Position start = new Position("A1");
-        start.setPiece(king);
+        Position start = board.getPosition("A1");
+        board.positionPiece(king, "A1");
         Position destination = new Position("A3");
-        assertFalse(king.canMoveTo(start,destination, null));
+        assertFalse(king.canMoveTo(start,destination, board));
     }
 
     @Test
     public void testCanMakeMoveTwoRightReturnsFalse() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
-        Position start = new Position("A1");
-        start.setPiece(king);
-        Position destination = new Position("C1");
-        assertFalse(king.canMoveTo(start,destination, null));
+        Position start = board.getPosition("A1");
+        board.positionPiece(king, "A1");
+        Position destination = board.getPosition("C1");
+        assertFalse(king.canMoveTo(start,destination, board));
     }
 
     @Test
     public void testCanMakeMoveTwoDiagonallyReturnsFalse() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
         King king = new King(false);
-        Position start = new Position("A1");
-        start.setPiece(king);
-        Position destination = new Position("C3");
-        assertFalse(king.canMoveTo(start,destination, null));
+        Position start = board.getPosition("A1");
+        board.positionPiece(king, "A1");
+        Position destination = board.getPosition("C3");
+        assertFalse(king.canMoveTo(start,destination, board));
     }
 
     @Test
@@ -241,6 +252,35 @@ public class KingTest {
         board.positionPiece(pawn, "F7");
         assertTrue(king.isChecked(board));
     }
+    @Test
+    public void testIsKingCheckedByPawnFewSquaresAway1() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        King king = new King(false);
+        Pawn pawn = new Pawn(true);
+        board.positionPiece(king, "E8");
+        board.positionPiece(pawn, "D7");
+        assertTrue(king.isChecked(board));
+    }
+
+    @Test
+    public void testIsKingCheckedByPawnFewSquaresAway2() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        King king = new King(true);
+        Pawn pawn = new Pawn(false);
+        board.positionPiece(king, "D7");
+        board.positionPiece(pawn, "C8");
+        assertTrue(king.isChecked(board));
+    }
+
+    @Test
+    public void testIsKingCheckedByPawnFewSquaresAway3() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        King king = new King(true);
+        Pawn pawn = new Pawn(false);
+        board.positionPiece(king, "D7");
+        board.positionPiece(pawn, "E8");
+        assertTrue(king.isChecked(board));
+    }
 
     @Test
     public void testKingGetLegalMovePositions() {
@@ -272,7 +312,10 @@ public class KingTest {
         King king = new King(false);
         board.positionPiece(king, "C4");
         board.positionPiece(new Queen(true), "C5");
-        assertEquals(king.getLegalMovePositions(board).size(), 3);
+        System.out.println(board);
+        System.out.println(king.getLegalMovePositions(board));
+        assertTrue(king.isCheckable(board.getPosition("C3"), board));
+        assertEquals(3, king.getLegalMovePositions(board).size());
     }
 
 

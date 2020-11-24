@@ -12,11 +12,7 @@ import java.util.stream.Collectors;
 
 
 //TODO: when king is checked, next move must prevent check
-//TODO: current problem - for isCheckable, when considering new position, current positon block all between positions free
-/*
-Need to fix above mentioned all between position problem by: getting all legal moves for piece and checking if position
-is in the list of legal moves
- */
+
 public class King extends Piece {
 
     private boolean checked = false;
@@ -32,12 +28,37 @@ public class King extends Piece {
         return checked;
     }
 
-    private boolean isCheckable(Position pos, ChessBoard board) {
+
+    /*
+    This is require for king's legal moves. King cannot make a move which will make it checked
+    However, if the check comes from a piece located above/below horizontally, the algorithm considers
+    moving one square up/down a legal move (since the king's current position blocks the potential position)
+
+    King will be temporary removed to workaround this problem.
+
+    However, when checking diagonals and a piece found is pawn, need to return the king back in its original place.
+    This is done because Pawns can make diagonal move only in case there is an enemy in the cell
+
+     */
+    private void removeKingFromBoard(Position position, ChessBoard board) {
+        board.getPosition(position.toString()).setPiece(null);
+    }
+
+    private void positionKingBack(Position position, ChessBoard board, King king) {
+        board.getPosition(position.toString()).setPiece(king);
+    }
+
+
+
+    public boolean isCheckable(Position pos, ChessBoard board) {
 
         String position = pos.toString();
+
         char column = position.charAt(0);
         char row = position.charAt(1);
 
+        Position kingOriginalPosition = this.getPosition();
+        this.removeKingFromBoard(this.getPosition(), board);
 
         // Checking same row, columns on the left
         for (char currentCol = (char) (column - 1); currentCol >= 'A'; currentCol--) {
@@ -86,6 +107,8 @@ public class King extends Piece {
                 }
             }
         }
+        //See comments why king is removed and added back later
+//        this.positionKingBack(this.getPosition(), board, this);
 
 
         // Check from Knight attack
@@ -123,7 +146,16 @@ public class King extends Piece {
             Piece piece = currentPosition.getPiece();
             if (piece != null) {
                 if (piece.isWhite() == this.isWhite()) break;
-                if (piece.canMoveTo(currentPosition, pos, board)) {
+                //Pawn can make diagonal move only if opponent is present. Need to return the king
+                if (piece instanceof Pawn) {
+                    this.positionKingBack(kingOriginalPosition, board, this);
+                    if (piece.canMoveTo(currentPosition, pos, board)) {
+                        this.removeKingFromBoard(kingOriginalPosition, board);
+                        return true;
+                    }
+                    this.removeKingFromBoard(kingOriginalPosition, board);
+                }
+                else if (piece.canMoveTo(currentPosition, pos, board)) {
                     return true;
                 }
             }
@@ -139,7 +171,16 @@ public class King extends Piece {
             Piece piece = currentPosition.getPiece();
             if (piece != null) {
                 if (piece.isWhite() == this.isWhite()) break;
-                if (piece.canMoveTo(currentPosition, pos, board)) {
+                //Pawn can make diagonal move only if opponent is present. Need to return the king
+                if (piece instanceof Pawn) {
+                    this.positionKingBack(kingOriginalPosition, board, this);
+                    if (piece.canMoveTo(currentPosition, pos, board)) {
+                        this.removeKingFromBoard(kingOriginalPosition, board);
+                        return true;
+                    }
+                    this.removeKingFromBoard(kingOriginalPosition, board);
+                }
+                else if (piece.canMoveTo(currentPosition, pos, board)) {
                     return true;
                 }
             }
@@ -155,7 +196,15 @@ public class King extends Piece {
             Piece piece = currentPosition.getPiece();
             if (piece != null) {
                 if (piece.isWhite() == this.isWhite()) break;
-                if (piece.canMoveTo(currentPosition, pos, board)) {
+                //Pawn can make diagonal move only if opponent is present. Need to return the king
+                if (piece instanceof Pawn) {
+                    this.positionKingBack(kingOriginalPosition, board, this);
+                    if (piece.canMoveTo(currentPosition, pos, board)) {
+                        this.removeKingFromBoard(kingOriginalPosition, board);
+                        return true;
+                    }
+                    this.removeKingFromBoard(kingOriginalPosition, board);
+                } else if (piece.canMoveTo(currentPosition, pos, board)) {
                     return true;
                 }
             }
@@ -171,13 +220,23 @@ public class King extends Piece {
             Piece piece = currentPosition.getPiece();
             if (piece != null) {
                 if (piece.isWhite() == this.isWhite()) break;
-                if (piece.canMoveTo(currentPosition, pos, board)) {
+                //Pawn can make diagonal move only if opponent is present. Need to return the king
+                if (piece instanceof Pawn) {
+                    this.positionKingBack(kingOriginalPosition, board, this);
+                    if (piece.canMoveTo(currentPosition, pos, board)) {
+                        this.removeKingFromBoard(kingOriginalPosition, board);
+                        return true;
+                    }
+                    this.removeKingFromBoard(kingOriginalPosition, board);
+                }
+                else if (piece.canMoveTo(currentPosition, pos, board)) {
                     return true;
                 }
             }
             currentRow++;
             currentColumn--;
         }
+        this.positionKingBack(kingOriginalPosition, board, this);
         return false;
     }
 
@@ -193,17 +252,8 @@ public class King extends Piece {
     //TODO: remove startPosition
     @Override
     public boolean canMoveTo(Position start, Position destination, ChessBoard board) {
-        if (!start.getPiece().equals(this)) return false;
-        if (!canReach(start, destination)) return false;
-        boolean differentPosition = !start.equals(destination);
-        boolean emptyPosition = destination.getPiece() == null;
-        if (differentPosition && emptyPosition) return true;
-        if (differentPosition) {
-            // If destination is not empty, pieces at two position have to be of different color
-            return start.getPiece().isWhite() != destination.getPiece().isWhite();
-        }
+        return this.getLegalMovePositions(board).contains(destination);
 
-        return false;
     }
 
     @Override
@@ -232,9 +282,6 @@ public class King extends Piece {
         return positions;
     }
 
-    private boolean canReach(Position start, Position destination) {
-        return start.distanceTo(destination) == 1;
-    }
 
     @Override
     public String toString() {
