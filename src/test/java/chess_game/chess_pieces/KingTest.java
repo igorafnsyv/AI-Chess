@@ -238,7 +238,7 @@ public class KingTest {
         ChessBoard board = ChessBoard.initializeBoard();
         King king = (King) board.getPosition("E8").getPiece();
         Knight knight = (Knight) board.getPosition("G1").getPiece();
-        knight.moveTo(knight.getPosition(), board.getPosition("D6"));
+        knight.moveTo(board.getPosition("D6"));
         assertTrue(king.isChecked(board));
         assertTrue(king.isMate(board));
     }
@@ -312,8 +312,6 @@ public class KingTest {
         King king = new King(false);
         board.positionPiece(king, "C4");
         board.positionPiece(new Queen(true), "C5");
-        System.out.println(board);
-        System.out.println(king.getLegalMovePositions(board));
         assertTrue(king.isCheckable(board.getPosition("C3"), board));
         assertEquals(3, king.getLegalMovePositions(board).size());
     }

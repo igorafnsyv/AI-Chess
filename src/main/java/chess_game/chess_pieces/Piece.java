@@ -28,8 +28,8 @@ public abstract class Piece {
         return position;
     }
 
-    public void moveTo(Position start, Position destination) {
-        start.setPiece(null);
+    public void moveTo(Position destination) {
+        position.setPiece(null);
         destination.setPiece(this);
         this.position = destination;
     }
@@ -39,7 +39,7 @@ public abstract class Piece {
         return this.getLegalMovePositions(board).contains(destination);
     }
 
-    public  abstract List<Position> getLegalMovePositions(ChessBoard board);
+    public abstract List<Position> getLegalMovePositions(ChessBoard board);
 
 
     public boolean isWhite() {

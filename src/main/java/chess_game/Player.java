@@ -19,7 +19,7 @@ public class Player {
             //Player can move only its own chess pieces
             boolean ownPieces = piece.isWhite() == this.white;
             if (ownPieces && piece.canMoveTo(destination, board)) {
-                piece.moveTo(start, destination);
+                piece.moveTo(destination);
                 return true;
             }
             return false;

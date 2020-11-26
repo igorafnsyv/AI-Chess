@@ -4,15 +4,27 @@ package chess_game;
 import chess_game.chess_pieces.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
     private Map<String, Position> board;
     private Position whiteKingPosition;
     private Position blackKingPosition;
 
+    private ChessBoard() {
+        board = new HashMap<>();
+        for (int row = 1; row <= 8; row++) {
+            for (char col = 'A'; col <= 'H'; col++) {
+                String position = String.valueOf(col) + row;
+                board.put(position, new Position(position));
+            }
+        }
+    }
+
     public static ChessBoard initializeEmptyBoard() {
         return new ChessBoard();
     }
+
 
     public static ChessBoard initializeBoard() {
         ChessBoard board = new ChessBoard();
@@ -41,26 +53,36 @@ public class ChessBoard {
         for (char ch = 'A'; ch <= 'H'; ch++) {
             String position = String.valueOf(ch) + 7;
             board.positionPiece(new Pawn(false), position);
-            board.getPosition(position).setPiece(new Pawn(false));
         }
 
+        board.whiteKingPosition = board.getPosition("E1");
+        board.blackKingPosition = board.getPosition("E8");
         return board;
     }
 
+    /*
+    This method is used for initial positioning during board initialization
+     */
     public void positionPiece(Piece piece, String positionStr) {
         Position position = this.getPosition(positionStr);
         position.setPiece(piece);
         piece.setPosition(position);
     }
 
-    private ChessBoard() {
-        board = new HashMap<>();
-        for (int row = 1; row <= 8; row++) {
-           for (char col = 'A'; col <= 'H'; col++) {
-               String position = String.valueOf(col) + row;
-               board.put(position, new Position(position));
-           }
+    /*
+    This method method is used for moves after initialization
+    Before the move is made, need to check manually if the move is legal
+     */
+    public void movePiece(Piece piece, String positionStr) {
+        if (piece instanceof King) {
+            if (piece.isWhite()) {
+                whiteKingPosition = piece.getPosition();
+            } else {
+                blackKingPosition = piece.getPosition();
+            }
         }
+        Position position = this.getPosition(positionStr);
+        piece.moveTo(position);
     }
 
     @Override
@@ -97,6 +119,35 @@ public class ChessBoard {
         return board.size();
     }
 
+    public Position getWhiteKingPosition() {
+        return whiteKingPosition;
+    }
 
+    public void setWhiteKingPosition(Position whiteKingPosition) {
+        this.whiteKingPosition = whiteKingPosition;
+    }
 
+    public Position getBlackKingPosition() {
+        return blackKingPosition;
+    }
+
+    public void setBlackKingPosition(Position blackKingPosition) {
+        this.blackKingPosition = blackKingPosition;
+    }
+
+    public List<Piece> getWhitePieces() {
+        List<Piece> list = board.values().stream().filter(position -> position.getPiece() != null)
+                .map(Position::getPiece)
+                .filter(Piece::isWhite)
+                .collect(Collectors.toList());
+        return list;
+    }
+
+    public List<Piece> getBlackPieces() {
+        List<Piece> list = board.values().stream().filter(position -> position.getPiece() != null)
+                .map(Position::getPiece)
+                .filter(piece -> !piece.isWhite())
+                .collect(Collectors.toList());
+        return list;
+    }
 }

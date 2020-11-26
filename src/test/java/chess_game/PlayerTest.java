@@ -22,7 +22,6 @@ public class PlayerTest {
         Position destination = chessBoard.getPosition("C4");
         assertTrue(player.makeMove(start, destination, chessBoard));
         assertSame(destination.getPiece(), piece);
-        System.out.println(chessBoard);
     }
 
 }
