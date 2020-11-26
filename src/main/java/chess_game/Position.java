@@ -31,9 +31,7 @@ public class Position {
         this.setPiece(piece);
     }
 
-//    public String getPosition() {
-//        return this.position;
-//    }
+
 
 
     /**
@@ -60,39 +58,6 @@ public class Position {
         if (rowDistance == colDistance) return  rowDistance;
         return -1;
 
-    }
-
-    public int rowDistanceTo(Position destination) {
-        int rowDistance = -1;
-        if (sameColumn(destination)) {
-            rowDistance = Math.abs(position.charAt(1) - destination.position.charAt(1));
-        }
-        return rowDistance;
-    }
-
-    public int columnDistanceTo(Position destination) {
-        int colDistance = -1;
-        if (sameRow(destination)) {
-            colDistance = Math.abs(position.charAt(0) - destination.position.charAt(0));
-        }
-        return colDistance;
-    }
-
-    public int diagonalDistanceTo(Position destination) {
-        int colDistance = Math.abs(position.charAt(0) - destination.position.charAt(0));
-        int rowDistance = Math.abs(position.charAt(1) - destination.position.charAt(1));
-        if (rowDistance == colDistance) return  rowDistance;
-        return -1;
-    }
-
-    //Column is letter
-    public boolean sameColumn(Position pos) {
-        return this.position.charAt(0) == pos.position.charAt(0);
-    }
-
-    //Row is number
-    public boolean sameRow(Position pos) {
-        return this.position.charAt(1) == pos.position.charAt(1);
     }
 
     @Override

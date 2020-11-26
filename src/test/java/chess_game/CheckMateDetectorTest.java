@@ -47,10 +47,8 @@ public class CheckMateDetectorTest {
         Any move along horizontal line will still be check from Rook
         Any move down vertical or diagonal will be check from King
          */
-        System.out.println(board);
         assertTrue(detector.isMateOnWhiteKing(board));
-        System.out.println(board);
-//        assertTrue(detector.isWhiteKingCheckMate(board));
+        assertTrue(detector.isWhiteKingCheckMate(board));
     }
 
     @Test
@@ -104,6 +102,7 @@ public class CheckMateDetectorTest {
         Any move down vertical or diagonal will be check from King
          */
         assertTrue(detector.isMateOnBlackKing(board));
+        assertTrue(detector.isBlackKingCheckMate(board));
     }
 
 }

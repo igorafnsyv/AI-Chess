@@ -73,7 +73,7 @@ public class ChessBoard {
     This method method is used for moves after initialization
     Before the move is made, need to check manually if the move is legal
      */
-    public void movePiece(Piece piece, String positionStr) {
+    public boolean movePiece(Piece piece, String positionStr) {
         if (piece instanceof King) {
             if (piece.isWhite()) {
                 whiteKingPosition = piece.getPosition();
@@ -82,7 +82,11 @@ public class ChessBoard {
             }
         }
         Position position = this.getPosition(positionStr);
-        piece.moveTo(position);
+        if (position != null && piece.canMoveTo(position, this)) {
+            piece.moveTo(position);
+            return true;
+        }
+        return false;
     }
 
     @Override
