@@ -107,4 +107,27 @@ public class BoardStateEvaluatorTest {
     }
 
 
+    @Test
+    public void testWhitePiecesPositionValue() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        board.positionPiece(new King(false), "D8");
+        board.setBlackKingPosition(board.getPosition("D8"));
+        board.positionPiece(new King(true), "D6");
+        board.positionPiece(new Queen(true), "C8");
+        board.positionPiece(new Rook(true), "G8");
+        assertEquals(200, BoardStateEvaluator.evaluateWhitePositions( board));
+    }
+
+    @Test
+    public void testBlackPiecesPositionValue() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        board.positionPiece(new King(true), "D8");
+        board.setWhiteKingPosition(board.getPosition("D8"));
+        board.positionPiece(new King(false), "D6");
+        board.positionPiece(new Queen(false), "C8");
+        board.positionPiece(new Rook(false), "G8");
+        assertEquals(200, BoardStateEvaluator.evaluateBlackPositions( board));
+    }
+
+
 }
