@@ -114,7 +114,7 @@ public class CheckMateDetectorTest {
         board.positionPiece(new Rook(false), "G8");
         CheckMateDetector detector = new CheckMateDetector();
         assertTrue(detector.isWhiteKingChecked(board));
-        assertEquals(List.of(board.getPosition("G8")), detector.getBlackCheckPositions());
+        assertEquals(List.of(board.getPosition("G8")), detector.getBlackCheckWhitePositions());
     }
 
     @Test
@@ -124,7 +124,7 @@ public class CheckMateDetectorTest {
         knight.moveTo(board.getPosition("D6"));
         CheckMateDetector detector = new CheckMateDetector();
         assertTrue(detector.isBlackKingChecked(board));
-        assertEquals(List.of(board.getPosition("D6")), detector.getWhiteCheckPositions());
+        assertEquals(List.of(board.getPosition("D6")), detector.getWhiteCheckBlackKingPositions());
     }
 
 }

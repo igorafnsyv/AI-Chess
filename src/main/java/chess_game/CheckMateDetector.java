@@ -11,13 +11,13 @@ public class CheckMateDetector {
     /*
     Position from which white pieces can check the Black King
      */
-    private List<Position> whiteCheckPositions;
+    private List<Position> whiteCheckBlackKingPositions;
     private boolean whiteKingChecked;
 
     /*
     Position from which black pieces can check the White King
      */
-    private List<Position> blackCheckPositions;
+    private List<Position> blackCheckWhitePositions;
     private boolean blackKingChecked;
 
     public CheckMateDetector() {}
@@ -25,12 +25,12 @@ public class CheckMateDetector {
     public boolean isWhiteKingChecked(ChessBoard board) {
         List<Piece> blackPieces = board.getBlackPieces();
         Position whiteKingPosition = board.getWhiteKingPosition();
-        blackCheckPositions = new ArrayList<>();
+        blackCheckWhitePositions = new ArrayList<>();
         this.whiteKingChecked = false;
         for (Piece piece : blackPieces) {
             if (piece instanceof King) continue;
             if (piece.getLegalMovePositions(board).contains(whiteKingPosition)) {
-                blackCheckPositions.add(piece.getPosition());
+                blackCheckWhitePositions.add(piece.getPosition());
 
                 this.whiteKingChecked = true;
             }
@@ -53,11 +53,11 @@ public class CheckMateDetector {
             List<Position> legalMovePositions = piece.getLegalMovePositions(board);
             for (Position legalMovePosition : legalMovePositions) {
                 //boolean operation will return false in case no legalMovePosition
-                blackCheckPositions.remove(legalMovePosition);
+                blackCheckWhitePositions.remove(legalMovePosition);
             }
         }
 
-        return !blackCheckPositions.isEmpty();
+        return !blackCheckWhitePositions.isEmpty();
     }
 
     public boolean isWhiteKingCheckMate(ChessBoard board) {
@@ -67,12 +67,12 @@ public class CheckMateDetector {
     public boolean isBlackKingChecked(ChessBoard board) {
         List<Piece> whitePieces = board.getWhitePieces();
         Position blackKingPosition = board.getBlackKingPosition();
-        whiteCheckPositions = new ArrayList<>();
+        whiteCheckBlackKingPositions = new ArrayList<>();
         this.blackKingChecked = false;
         for (Piece piece : whitePieces) {
             if (piece instanceof King) continue;
             if (piece.getLegalMovePositions(board).contains(blackKingPosition)) {
-                whiteCheckPositions.add(piece.getPosition());
+                whiteCheckBlackKingPositions.add(piece.getPosition());
                 this.blackKingChecked = true;
             }
         }
@@ -88,11 +88,11 @@ public class CheckMateDetector {
             List<Position> legalMovePositions = piece.getLegalMovePositions(board);
             for (Position legalMovePosition : legalMovePositions) {
                 //boolean operation will return false in case no legalMovePosition
-                whiteCheckPositions.remove(legalMovePosition);
+                whiteCheckBlackKingPositions.remove(legalMovePosition);
             }
         }
 
-        return !whiteCheckPositions.isEmpty();
+        return !whiteCheckBlackKingPositions.isEmpty();
     }
 
     public boolean isBlackKingCheckMate(ChessBoard board) {
@@ -102,14 +102,14 @@ public class CheckMateDetector {
     /*
     Require running isBlackKingChecked before
      */
-    public List<Position> getWhiteCheckPositions() {
-        return whiteCheckPositions;
+    public List<Position> getWhiteCheckBlackKingPositions() {
+        return whiteCheckBlackKingPositions;
     }
 
     /*
     Requires running isWhiteKingChecked before
      */
-    public List<Position> getBlackCheckPositions() {
-        return blackCheckPositions;
+    public List<Position> getBlackCheckWhitePositions() {
+        return blackCheckWhitePositions;
     }
 }

@@ -75,8 +75,8 @@ public class Game {
                 if (currentPlayer.makeMove(startPosition, destinationPosition, board)) {
                     System.out.println("Move " + piece + " from " + startPosition + " to " + destinationPosition);
                     if (checkMateDetector.isWhiteKingChecked(board) || checkMateDetector.isBlackKingChecked(board)) {
-                        List<Position> whiteKingCheckedFromPosition = checkMateDetector.getBlackCheckPositions();
-                        List<Position> blackKingCheckedFromPosition = checkMateDetector.getWhiteCheckPositions();
+                        List<Position> whiteKingCheckedFromPosition = checkMateDetector.getBlackCheckWhitePositions();
+                        List<Position> blackKingCheckedFromPosition = checkMateDetector.getWhiteCheckBlackKingPositions();
                         if (!whiteKingCheckedFromPosition.isEmpty()) {
                             System.out.println("White King is checked from: " + whiteKingCheckedFromPosition);
                         }

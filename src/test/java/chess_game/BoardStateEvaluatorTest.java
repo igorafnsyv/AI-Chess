@@ -1,7 +1,9 @@
 package chess_game;
 
+import chess_game.chess_pieces.King;
 import chess_game.chess_pieces.Knight;
 import chess_game.chess_pieces.Queen;
+import chess_game.chess_pieces.Rook;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -49,6 +51,16 @@ public class BoardStateEvaluatorTest {
         int knightMoves = 7;
         int queenMoves = 27;
         assertEquals(knightMoves + queenMoves, BoardStateEvaluator.whitePiecePossibleMoveCount(board));
+    }
+
+    @Test
+    public void testWhiteKnightBoardCheckedValue() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        board.positionPiece(new King(true), "D8");
+        board.setWhiteKingPosition(board.getPosition("D8"));
+        board.positionPiece(new King(false), "D6");
+        board.positionPiece(new Rook(false), "G8");
+        assertEquals(100, BoardStateEvaluator.blackCheckWhiteKing( board));
     }
 
 
