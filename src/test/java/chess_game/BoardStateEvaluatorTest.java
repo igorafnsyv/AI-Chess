@@ -54,13 +54,56 @@ public class BoardStateEvaluatorTest {
     }
 
     @Test
-    public void testWhiteKnightBoardCheckedValue() {
+    public void testBlackeKnightBoardCheckedValue() {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
         board.positionPiece(new King(true), "D8");
         board.setWhiteKingPosition(board.getPosition("D8"));
         board.positionPiece(new King(false), "D6");
         board.positionPiece(new Rook(false), "G8");
         assertEquals(100, BoardStateEvaluator.blackCheckWhiteKing( board));
+    }
+
+    @Test
+    public void testBlackKingBoardCheckedValue() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        board.positionPiece(new King(false), "D8");
+        board.setBlackKingPosition(board.getPosition("D8"));
+        board.positionPiece(new King(true), "D6");
+        board.positionPiece(new Rook(true), "G8");
+        assertEquals(100, BoardStateEvaluator.whiteCheckBlackKing( board));
+    }
+
+    @Test
+    public void testBlackKingBoardNotCheckedValue() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        board.positionPiece(new King(false), "D8");
+        board.setBlackKingPosition(board.getPosition("D8"));
+        board.positionPiece(new King(true), "D6");
+        board.positionPiece(new Rook(true), "G7");
+        assertEquals(0, BoardStateEvaluator.whiteCheckBlackKing( board));
+    }
+
+    @Test
+    public void testValueOfCheckMate() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        board.positionPiece(new King(false), "D8");
+        board.setBlackKingPosition(board.getPosition("D8"));
+        board.positionPiece(new King(true), "D6");
+        board.positionPiece(new Rook(true), "G8");
+        assertEquals(1000, BoardStateEvaluator.whiteCheckmateBlackKing(board));
+    }
+
+    @Test
+    public void testValueOfCheckMateWhiteKing() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        board.positionPiece(new King(true), "D8");
+        board.setWhiteKingPosition(board.getPosition("D8"));
+        board.positionPiece(new King(false), "D6");
+        board.positionPiece(new Rook(false), "G8");
+        System.out.println(board);
+        CheckMateDetector detector = new CheckMateDetector();
+        System.out.println(detector.isWhiteKingCheckMate(board));
+        assertEquals(1000, BoardStateEvaluator.blackCheckmateWhiteKing(board));
     }
 
 
