@@ -66,4 +66,9 @@ public class Pawn extends Piece {
 
         return positions;
     }
+
+    @Override
+    public int getValue() {
+        return 1;
+    }
 }

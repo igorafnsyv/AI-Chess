@@ -109,6 +109,10 @@ public class Bishop extends Piece {
         return positions;
     }
 
+    @Override
+    public int getValue() {
+        return 3;
+    }
 
     @Override
     public String toString() {

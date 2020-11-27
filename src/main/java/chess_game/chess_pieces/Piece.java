@@ -41,6 +41,9 @@ public abstract class Piece {
 
     public abstract List<Position> getLegalMovePositions(ChessBoard board);
 
+    //Standard values
+    public abstract int getValue();
+
 
     public boolean isWhite() {
         return white;

@@ -2,7 +2,6 @@ package chess_game;
 
 import chess_game.chess_pieces.Piece;
 
-import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -69,6 +68,10 @@ public class Game {
                 String startPosition = positionsArray[0];
                 String destinationPosition = positionsArray[1];
                 Piece piece = board.getPosition(startPosition).getPiece();
+                if (piece == null) {
+                    System.out.println("No piece at " + startPosition);
+                    continue;
+                }
                 if (currentPlayer.makeMove(startPosition, destinationPosition, board)) {
                     System.out.println("Move " + piece + " from " + startPosition + " to " + destinationPosition);
                     if (checkMateDetector.isWhiteKingChecked(board) || checkMateDetector.isBlackKingChecked(board)) {

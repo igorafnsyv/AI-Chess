@@ -44,6 +44,11 @@ public class Knight extends Piece {
     }
 
     @Override
+    public int getValue() {
+        return 3;
+    }
+
+    @Override
     public String toString() {
         String color = super.toString();
         return color + "N";

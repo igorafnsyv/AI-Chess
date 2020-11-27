@@ -195,9 +195,15 @@ public class Queen extends Piece{
     }
 
     @Override
+    public int getValue() {
+        return 9;
+    }
+
+    @Override
     public String toString() {
         String color = super.toString();
         return color + "Q";
     }
+
 
 }

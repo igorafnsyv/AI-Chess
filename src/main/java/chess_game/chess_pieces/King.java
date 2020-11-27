@@ -235,6 +235,11 @@ public class King extends Piece {
         return positions;
     }
 
+    @Override
+    public int getValue() {
+        //King has no value, its loss ends the game
+        return 0;
+    }
 
     @Override
     public String toString() {

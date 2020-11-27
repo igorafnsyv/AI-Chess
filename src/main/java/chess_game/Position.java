@@ -32,8 +32,6 @@ public class Position {
     }
 
 
-
-
     /**
      * Position contains a chess Piece.
      * @param piece - a piece to be placed in this position

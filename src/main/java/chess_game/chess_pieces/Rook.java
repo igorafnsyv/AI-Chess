@@ -109,6 +109,11 @@ public class Rook extends Piece {
     }
 
     @Override
+    public int getValue() {
+        return 5;
+    }
+
+    @Override
     public String toString() {
         String color = super.toString();
         return color + "R";
