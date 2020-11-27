@@ -82,7 +82,9 @@ public class ChessBoard {
             }
         }
         Position position = this.getPosition(positionStr);
-        if (position != null && piece.canMoveTo(position, this)) {
+        //Cannot capture opponent's king
+        boolean kingOnDestinationPosition = position.getPiece() instanceof King;
+        if (position != null && piece.canMoveTo(position, this) && !kingOnDestinationPosition) {
             piece.moveTo(position);
             return true;
         }

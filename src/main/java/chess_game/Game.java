@@ -3,6 +3,7 @@ package chess_game;
 import chess_game.chess_pieces.Piece;
 
 import java.sql.SQLOutput;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -70,6 +71,16 @@ public class Game {
                 Piece piece = board.getPosition(startPosition).getPiece();
                 if (currentPlayer.makeMove(startPosition, destinationPosition, board)) {
                     System.out.println("Move " + piece + " from " + startPosition + " to " + destinationPosition);
+                    if (checkMateDetector.isWhiteKingChecked(board) || checkMateDetector.isBlackKingChecked(board)) {
+                        List<Position> whiteKingCheckedFromPosition = checkMateDetector.getBlackCheckPositions();
+                        List<Position> blackKingCheckedFromPosition = checkMateDetector.getWhiteCheckPositions();
+                        if (!whiteKingCheckedFromPosition.isEmpty()) {
+                            System.out.println("White King is checked from: " + whiteKingCheckedFromPosition);
+                        }
+                        if (!blackKingCheckedFromPosition.isEmpty()) {
+                            System.out.println("Black King is checked from: " + blackKingCheckedFromPosition);
+                        }
+                    }
                     correctMoveMade = true;
                 } else {
                     System.out.println("Illegal Move for " + piece + " from " + startPosition + " to " + destinationPosition);

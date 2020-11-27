@@ -5,6 +5,8 @@ import chess_game.chess_pieces.Knight;
 import chess_game.chess_pieces.Rook;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class CheckMateDetectorTest {
@@ -30,7 +32,7 @@ public class CheckMateDetectorTest {
         knight.moveTo(board.getPosition("D3"));
         CheckMateDetector detector = new CheckMateDetector();
         detector.isWhiteKingChecked(board);
-        assertFalse(detector.isMateOnWhiteKing(board));
+        assertFalse(detector.isWhiteKingCheckMate(board));
     }
 
     @Test
@@ -47,7 +49,6 @@ public class CheckMateDetectorTest {
         Any move along horizontal line will still be check from Rook
         Any move down vertical or diagonal will be check from King
          */
-        assertTrue(detector.isMateOnWhiteKing(board));
         assertTrue(detector.isWhiteKingCheckMate(board));
     }
 
@@ -60,7 +61,7 @@ public class CheckMateDetectorTest {
         board.positionPiece(new Rook(false), "G8");
         CheckMateDetector detector = new CheckMateDetector();
         assertTrue(detector.isWhiteKingChecked(board));
-        assertFalse(detector.isMateOnWhiteKing(board));
+        assertFalse(detector.isWhiteKingCheckMate(board));
     }
 
     @Test
@@ -84,7 +85,7 @@ public class CheckMateDetectorTest {
         knight.moveTo(board.getPosition("D6"));
         CheckMateDetector detector = new CheckMateDetector();
         assertTrue(detector.isBlackKingChecked(board));
-        assertFalse(detector.isMateOnBlackKing(board));
+        assertFalse(detector.isBlackKingCheckMate(board));
     }
 
     @Test
@@ -101,8 +102,29 @@ public class CheckMateDetectorTest {
         Any move along horizontal line will still be check from Rook
         Any move down vertical or diagonal will be check from King
          */
-        assertTrue(detector.isMateOnBlackKing(board));
         assertTrue(detector.isBlackKingCheckMate(board));
+    }
+
+    @Test
+    public void testGetWhiteKingCheckList() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        board.positionPiece(new King(true), "D8");
+        board.setWhiteKingPosition(board.getPosition("D8"));
+        board.positionPiece(new King(false), "D6");
+        board.positionPiece(new Rook(false), "G8");
+        CheckMateDetector detector = new CheckMateDetector();
+        assertTrue(detector.isWhiteKingChecked(board));
+        assertEquals(List.of(board.getPosition("G8")), detector.getBlackCheckPositions());
+    }
+
+    @Test
+    public void testGetBlackKingCheckList() {
+        ChessBoard board = ChessBoard.initializeBoard();
+        Knight knight = (Knight) board.getPosition("G1").getPiece();
+        knight.moveTo(board.getPosition("D6"));
+        CheckMateDetector detector = new CheckMateDetector();
+        assertTrue(detector.isBlackKingChecked(board));
+        assertEquals(List.of(board.getPosition("D6")), detector.getWhiteCheckPositions());
     }
 
 }

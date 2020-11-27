@@ -20,9 +20,9 @@ public class Player {
             Piece piece = board.getPosition(start).getPiece();
             //Player can move only its own chess pieces
             boolean ownPieces = piece.isWhite() == this.white;
-            if (ownPieces && piece.canMoveTo(board.getPosition(destination), board)) {
-                board.movePiece(piece, destination);
-                return true;
+            if (ownPieces) {
+                return board.movePiece(piece, destination);
+
             }
             return false;
 
