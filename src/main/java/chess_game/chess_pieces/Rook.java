@@ -12,6 +12,10 @@ public class Rook extends Piece {
         super(white);
     }
 
+    @Override
+    public Rook makeCopy() {
+        return new Rook(this.isWhite());
+    }
 
     @Override
     public List<Position> getLegalMovePositions(ChessBoard board) {

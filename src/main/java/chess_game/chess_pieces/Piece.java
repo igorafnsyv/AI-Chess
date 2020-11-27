@@ -44,6 +44,8 @@ public abstract class Piece {
     //Standard values
     public abstract int getValue();
 
+    public abstract Piece makeCopy();
+
 
     public boolean isWhite() {
         return white;

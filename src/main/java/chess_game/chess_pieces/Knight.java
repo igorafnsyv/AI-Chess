@@ -13,6 +13,10 @@ public class Knight extends Piece {
         super(white);
     }
 
+    @Override
+    public Knight makeCopy() {
+        return new Knight(this.isWhite());
+    }
 
     @Override
     public List<Position> getLegalMovePositions(ChessBoard board) {

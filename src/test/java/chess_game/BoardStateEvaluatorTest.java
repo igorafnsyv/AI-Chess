@@ -100,9 +100,7 @@ public class BoardStateEvaluatorTest {
         board.setWhiteKingPosition(board.getPosition("D8"));
         board.positionPiece(new King(false), "D6");
         board.positionPiece(new Rook(false), "G8");
-        System.out.println(board);
         CheckMateDetector detector = new CheckMateDetector();
-        System.out.println(detector.isWhiteKingCheckMate(board));
         assertEquals(1000, BoardStateEvaluator.blackCheckmateWhiteKing(board));
     }
 

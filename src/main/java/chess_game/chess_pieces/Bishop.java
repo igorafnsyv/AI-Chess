@@ -13,6 +13,10 @@ public class Bishop extends Piece {
         super(white);
     }
 
+    @Override
+    public Bishop makeCopy() {
+        return new Bishop(this.isWhite());
+    }
 
     @Override
     public List<Position> getLegalMovePositions(ChessBoard board) {

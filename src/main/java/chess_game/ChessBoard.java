@@ -21,6 +21,37 @@ public class ChessBoard {
         }
     }
 
+    private ChessBoard(Map<String, Position> board, Position whiteKingPosition, Position blackKingPosition) {
+        this.board = board;
+        this.whiteKingPosition = whiteKingPosition;
+        this.blackKingPosition = blackKingPosition;
+    }
+
+
+    public ChessBoard makeCopy() {
+        Map<String, Position> copyBoard = new HashMap<>();
+        Position copyWhiteKingPosition = null;
+        Position copyBlackKingPosition = null;
+        for (Position position : board.values()) {
+            Position copyPosition = position.makeCopy();
+            if (position.getPiece() != null) {
+                Piece copyPiece = position.getPiece().makeCopy();
+                copyPiece.setPosition(copyPosition);
+                copyPosition.setPiece(copyPiece);
+                if (copyPiece instanceof King) {
+                    if (copyPiece.isWhite()) {
+                        copyWhiteKingPosition = copyPosition;
+                    } else {
+                        copyBlackKingPosition = copyPosition;
+                    }
+                }
+            }
+            copyBoard.put(copyPosition.toString(), copyPosition);
+        }
+
+        return new ChessBoard(copyBoard, copyWhiteKingPosition, copyBlackKingPosition);
+    }
+
     public static ChessBoard initializeEmptyBoard() {
         return new ChessBoard();
     }
@@ -142,18 +173,18 @@ public class ChessBoard {
     }
 
     public List<Piece> getWhitePieces() {
-        List<Piece> list = board.values().stream().filter(position -> position.getPiece() != null)
+        return board.values().stream().filter(position -> position.getPiece() != null)
                 .map(Position::getPiece)
                 .filter(Piece::isWhite)
                 .collect(Collectors.toList());
-        return list;
+
     }
 
     public List<Piece> getBlackPieces() {
-        List<Piece> list = board.values().stream().filter(position -> position.getPiece() != null)
+        return board.values().stream().filter(position -> position.getPiece() != null)
                 .map(Position::getPiece)
                 .filter(piece -> !piece.isWhite())
                 .collect(Collectors.toList());
-        return list;
+
     }
 }

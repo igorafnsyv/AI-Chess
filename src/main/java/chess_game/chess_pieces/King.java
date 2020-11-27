@@ -236,6 +236,13 @@ public class King extends Piece {
     }
 
     @Override
+    public King makeCopy() {
+        King copy = new King(this.isWhite());
+        copy.checked = this.checked;
+        return copy;
+    }
+
+    @Override
     public int getValue() {
         //King has no value, its loss ends the game
         return 0;

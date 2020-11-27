@@ -12,6 +12,10 @@ public class Queen extends Piece{
         super(white);
     }
 
+    @Override
+    public Queen makeCopy() {
+        return new Queen(this.isWhite());
+    }
 
     @Override
     public List<Position> getLegalMovePositions(ChessBoard board) {

@@ -10,7 +10,7 @@ import java.util.Objects;
  */
 
 public class Position {
-    private String position;
+    private final String position;
     private Piece piece;
 
     /**
@@ -24,6 +24,13 @@ public class Position {
             throw new IllegalArgumentException(position + " is not a legal position");
         }
         this.position = position;
+    }
+
+    /*
+    Position with no piece is created as piece will be later passed as a parameter
+     */
+    public Position makeCopy() {
+        return new Position(this.position);
     }
 
     public Position(String position, Piece piece) {

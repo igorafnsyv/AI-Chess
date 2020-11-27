@@ -16,6 +16,13 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public Pawn makeCopy() {
+        Pawn copy = new Pawn(this.isWhite());
+        copy.madeFirstMove = this.madeFirstMove;
+        return copy;
+    }
+
+    @Override
     public void moveTo(Position destination) {
         super.moveTo(destination);
         if (!madeFirstMove) {
