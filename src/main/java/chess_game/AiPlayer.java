@@ -2,11 +2,8 @@ package chess_game;
 
 import chess_game.chess_pieces.Piece;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /*
 Currently plays Black
@@ -17,13 +14,18 @@ public class AiPlayer extends Player {
         super(white, name);
     }
 
-    /*
-    Idea behind this method:
-    Collect all legal moves AI player can perform and filter out moves which will put Black King in check
-    As according to chess rules, when a King is checked, the next move must cancel the check.
+    @Override
+    public boolean isComputer() {
+        return true;
+    }
 
-    In case no legal moves, the game ends?
-     */
+    /*
+        Idea behind this method:
+        Collect all legal moves AI player can perform and filter out moves which will put Black King in check
+        As according to chess rules, when a King is checked, the next move must cancel the check.
+
+        In case no legal moves, the game ends?
+         */
     public List<Move> getLegalMoves(ChessBoard board) {
         List<Move> moves = new LinkedList<>();
         for (Piece piece : board.getBlackPieces()) {
@@ -43,7 +45,7 @@ public class AiPlayer extends Player {
 
     public Move findBestMove(List<Move> moves, ChessBoard board, int depth) {
 
-        long maxValue = 0;
+        long maxValue = Long.MIN_VALUE;
         Move bestMove = null;
 
         for (Move potentialMove : moves) {
@@ -59,8 +61,7 @@ public class AiPlayer extends Player {
 
     // make sure check and checkmate are handled
     public long max(ChessBoard board, int depth, long alpha, long beta) {
-        if (depth == 0 ) {
-//            System.out.println(BoardStateEvaluator.evaluateBlackPositions(board) + " black val");
+        if (depth == 0) {
             return BoardStateEvaluator.evaluateBlackPositions(board);
         }
         long max = Long.MIN_VALUE;
@@ -85,8 +86,7 @@ public class AiPlayer extends Player {
 
     public long min(ChessBoard board, int depth, long alpha, long beta) {
         if (depth == 0) {
-//            System.out.println(BoardStateEvaluator.evaluateWhitePositions(board) + " white value");
-            return BoardStateEvaluator.evaluateWhitePositions(board);
+            return -BoardStateEvaluator.evaluateWhitePositions(board);
         }
         long min = Long.MAX_VALUE;
         List<Move> blackLegalMoves = new LinkedList<>();
@@ -98,7 +98,6 @@ public class AiPlayer extends Player {
             }
         }
         for (Move potentialMove : blackLegalMoves) {
-
             long value = max(potentialMove.getBoardStateAfterMove(board), depth - 1, alpha, beta);
             min = Math.min(value, min);
             if (value <= alpha) {

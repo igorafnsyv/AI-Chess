@@ -51,19 +51,6 @@ public class Position {
         return this.piece;
     }
 
-    //TODO: replace distanceTo usage with below
-    public int distanceTo(Position destination) {
-        int colDistance = Math.abs(position.charAt(0) - destination.position.charAt(0));
-        int rowDistance = Math.abs(position.charAt(1) - destination.position.charAt(1));
-        // Same column, different rows
-        if (colDistance == 0) return rowDistance;
-        //Same row, different columns
-        if (rowDistance == 0) return colDistance;
-        //Diagonal move
-        if (rowDistance == colDistance) return  rowDistance;
-        return -1;
-
-    }
 
     @Override
     public boolean equals(Object o) {

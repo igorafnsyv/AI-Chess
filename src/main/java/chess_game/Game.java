@@ -14,6 +14,7 @@ public class Game {
     private Player playerBlack;
     private Player currentPlayer;
     private CheckMateDetector checkMateDetector;
+    private final static int MAX_DEPTH = 3;
 
 
     public Game(Player playerWhite, Player playerBlack) {
@@ -49,56 +50,95 @@ public class Game {
         Scanner scanner = new Scanner(System.in);
         Pattern moveCommandPattern = Pattern.compile("[A-H][1-8]\\s[A-H][1-8]");
         while (!isGameEnd()) {
-            System.out.println(board);
-            System.out.println();
-            System.out.println("Current Player is " + currentPlayer);
-            System.out.println("Move format: start destination (example: A2 A3)");
-            boolean correctMoveMade = false;
-            while (!correctMoveMade) {
-                System.out.print("Enter move: ");
-                String command = scanner.nextLine();
-                Matcher matcher = moveCommandPattern.matcher(command);
-                while (!matcher.matches()) {
-                    System.out.println("Invalid Move Format!");
-                    System.out.print("Enter move: ");
-                    command = scanner.nextLine();
-                    matcher = moveCommandPattern.matcher(command);
+            this.printBoardAndPlayerInfo();
+            if (!currentPlayer.isComputer()) {
+                this.handleHumanPlayer(scanner, moveCommandPattern);
+            } else {
+                AiPlayer computer = (AiPlayer) currentPlayer;
+                List<Move>  moves = computer.getLegalMoves(board);
+                Move computerMove = computer.findBestMove(moves, board, MAX_DEPTH);
+                if (computerMove == null) {
+                    break;
                 }
-                String[] positionsArray = command.split("\\s");
-                String startPosition = positionsArray[0];
-                String destinationPosition = positionsArray[1];
-                Piece piece = board.getPosition(startPosition).getPiece();
-                if (piece == null) {
-                    System.out.println("No piece at " + startPosition);
-                    continue;
-                }
-                Move move = new Move(startPosition, destinationPosition);
-                if (currentPlayer.makeMove(move, board)) {
-                    System.out.println("Move " + piece + " from " + startPosition + " to " + destinationPosition);
-                    if (checkMateDetector.isWhiteKingChecked(board) || checkMateDetector.isBlackKingChecked(board)) {
-                        List<Position> whiteKingCheckedFromPosition = checkMateDetector.getBlackCheckWhitePositions();
-                        List<Position> blackKingCheckedFromPosition = checkMateDetector.getWhiteCheckBlackKingPositions();
-                        if (!whiteKingCheckedFromPosition.isEmpty()) {
-                            System.out.println("White King is checked from: " + whiteKingCheckedFromPosition);
-                        }
-                        if (!blackKingCheckedFromPosition.isEmpty()) {
-                            System.out.println("Black King is checked from: " + blackKingCheckedFromPosition);
-                        }
-                    }
-                    correctMoveMade = true;
-                } else {
-                    System.out.println("Illegal Move for " + piece + " from " + startPosition + " to " + destinationPosition);
-                }
-            } // correct move made
-            setCurrentPlayer(getNextPlayer());
+                computer.makeMove(computerMove, board);
+                this.printMoveInformation(computerMove, true);
+            }
+            this.setCurrentPlayer(getNextPlayer());
 
         }
 
     }
 
+    private void printBoardAndPlayerInfo() {
+        System.out.println(board);
+        System.out.println();
+        System.out.println("Current Player is " + currentPlayer);
+        System.out.println("Move format: start destination (example: A2 A3)");
+    }
+
+    private void handleHumanPlayer(Scanner scanner, Pattern moveCommandPattern) {
+        boolean correctMoveMade = false;
+        while (!correctMoveMade) {
+            System.out.print("Enter move: ");
+            String command = this.readMoveCommand(scanner, moveCommandPattern);
+            String[] positionsArray = command.split("\\s");
+            String startPosition = positionsArray[0];
+            String destinationPosition = positionsArray[1];
+            Piece piece = board.getPosition(startPosition).getPiece();
+            if (piece == null) {
+                System.out.println("No piece at " + startPosition);
+                continue;
+            }
+            Move move = new Move(startPosition, destinationPosition);
+            correctMoveMade = currentPlayer.makeMove(move, board);
+            this.printMoveInformation(move, correctMoveMade);
+        } // correct move made
+    }
+
+    private String readMoveCommand(Scanner scanner, Pattern moveCommandPattern) {
+        String command = scanner.nextLine();
+        Matcher matcher = moveCommandPattern.matcher(command);
+        while (!matcher.matches()) {
+            this.printIncorrectMoveMessage();
+            command = scanner.nextLine();
+            matcher = moveCommandPattern.matcher(command);
+        }
+        return command;
+    }
+
+    private void printMoveInformation(Move move, boolean correctMoveMade) {
+        String start = move.getStartPosition();
+        String destination = move.getMoveDestination();
+        Piece piece = board.getPosition(destination).getPiece();
+        if (correctMoveMade) {
+            System.out.println("Move " +piece + " from " + start + " to " + destination);
+            this.printCheckInformation();
+        } else {
+            System.out.println("Illegal Move for " + piece + " from " + start + " to " + destination);
+        }
+    }
+
+    private void printIncorrectMoveMessage() {
+        System.out.println("Invalid Move Format!");
+        System.out.print("Enter move: ");
+    }
+
+    private void printCheckInformation() {
+        if (checkMateDetector.isWhiteKingChecked(board) || checkMateDetector.isBlackKingChecked(board)) {
+            List<Position> whiteKingCheckedFromPosition = checkMateDetector.getBlackCheckWhitePositions();
+            List<Position> blackKingCheckedFromPosition = checkMateDetector.getWhiteCheckBlackKingPositions();
+            if (!whiteKingCheckedFromPosition.isEmpty()) {
+                System.out.println("White King is checked from: " + whiteKingCheckedFromPosition);
+            }
+            if (!blackKingCheckedFromPosition.isEmpty()) {
+                System.out.println("Black King is checked from: " + blackKingCheckedFromPosition);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         Player player1 = new Player(true, "Player 1");
-        Player player2 = new Player(false, "Player 2");
+        Player player2 = new AiPlayer(false, "Computer");
         Game chessGame = new Game(player1, player2);
         chessGame.start();
     }

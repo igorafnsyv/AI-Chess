@@ -104,39 +104,4 @@ public class PieceTest {
         assertTrue(piece.canMoveTo(destination, board));
     }
 
-    @Test
-    public void testDistanceToSamePositionReturns0() {
-        Position start = new Position("A1");
-        Position destination = new Position("A1");
-        assertEquals(start.distanceTo(destination), 0);
-    }
-
-    @Test
-    public void testDistanceToSameRowReturnsCorrect() {
-        Position start = new Position("A1");
-        Position destination = new Position("H1");
-        assertEquals(start.distanceTo(destination), 7);
-    }
-
-    @Test
-    public void testDistanceSameColumnReturnsCorrect() {
-        Position start = new Position("A1");
-        Position destination = new Position("A8");
-        assertEquals(start.distanceTo(destination), 7);
-
-    }
-
-    @Test
-    public void testDestinationDiagonallyReturnsCorrect() {
-        Position start = new Position("A1");
-        Position destination = new Position("D4");
-        assertEquals(start.distanceTo(destination), 3);
-    }
-
-    @Test
-    public void testDestinationNotReachableReturnsMinusOne() {
-        Position start = new Position("A1");
-        Position destination = new Position("D8");
-        assertEquals(start.distanceTo(destination), -1);
-    }
 }

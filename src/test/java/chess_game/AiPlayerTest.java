@@ -1,8 +1,6 @@
 package chess_game;
 
-import chess_game.chess_pieces.King;
-import chess_game.chess_pieces.Pawn;
-import chess_game.chess_pieces.Rook;
+import chess_game.chess_pieces.*;
 import org.junit.Test;
 
 
@@ -48,14 +46,39 @@ public class AiPlayerTest {
 
     @Test
     public void testAiPlayerMiniMaxAtStart() {
-
         ChessBoard board = ChessBoard.initializeBoard();
         AiPlayer player = new AiPlayer(false, "Computer");
         List<Move> moves =  player.getLegalMoves(board);
-        int depth = 5;
-        System.out.println(player.findBestMove(moves, board, depth));
+        int depth = 3;
+//        System.out.println(player.findBestMove(moves, board, depth));
+    }
 
+    @Test
+    public void testFindBestMoveReturnsCheckMove() {
+        ChessBoard board = ChessBoard.initializeEmptyBoard();
+        King blackKing = new King(false);
+        board.positionPiece(blackKing, "D7");
+        board.setBlackKingPosition(board.getPosition("D7"));
+        Queen whiteQueen = new Queen(true);
+        board.positionPiece(whiteQueen, "D6");
+//        board.setBlackKingPosition(board.getPosition("D6"));
+        Rook rook = new Rook(true);
+        board.positionPiece(rook, "G7");
+        Rook rook2 = new Rook(true);
+        board.positionPiece(rook2, "B6");
+        board.positionPiece(new Knight(true), "A7");
+        board.positionPiece(new Knight(true), "F6");
+        System.out.println(blackKing.getLegalMovePositions(board));
+        System.out.println(rook2.getLegalMovePositions(board));
 
+        System.out.println(BoardStateEvaluator.evaluateBlackPositions(board));
+        AiPlayer player = new AiPlayer(false, "Computer");
+        System.out.println(player.getLegalMoves(board));
+        System.out.println(board);
+        int depth = 1;
+        CheckMateDetector detector = new CheckMateDetector();
+        System.out.println(detector.isWhiteKingCheckMate(board));
+        System.out.println(player.findBestMove(player.getLegalMoves(board), board ,depth));
     }
 
 }

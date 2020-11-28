@@ -12,6 +12,10 @@ public class Player {
         this.name = name;
     }
 
+    public boolean isComputer() {
+        return false;
+    }
+
     public boolean isWhite() {
         return white;
     }
