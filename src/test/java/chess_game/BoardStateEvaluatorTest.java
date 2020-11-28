@@ -91,18 +91,18 @@ public class BoardStateEvaluatorTest {
         board.setBlackKingPosition(board.getPosition("D8"));
         board.positionPiece(new King(true), "D6");
         board.positionPiece(new Rook(true), "G8");
-        System.out.println(blackKing.getLegalMovePositions(board));
         assertEquals(1000, BoardStateEvaluator.whiteCheckmateBlackKing(board));
     }
 
     @Test
     public void testValueOfCheckMateWhiteKing() {
         ChessBoard board = ChessBoard.initializeEmptyBoard();
-        board.positionPiece(new King(true), "D8");
+        King whiteKing = new King(true);
+        board.positionPiece(whiteKing, "D8");
         board.setWhiteKingPosition(board.getPosition("D8"));
         board.positionPiece(new King(false), "D6");
         board.positionPiece(new Rook(false), "G8");
-        CheckMateDetector detector = new CheckMateDetector();
+        assertTrue(whiteKing.isChecked(board));
         assertEquals(1000, BoardStateEvaluator.blackCheckmateWhiteKing(board));
     }
 

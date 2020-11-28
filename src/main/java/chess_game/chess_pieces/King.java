@@ -1,11 +1,9 @@
 package chess_game.chess_pieces;
 
-import chess_game.CheckMateDetector;
 import chess_game.ChessBoard;
 import chess_game.Position;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -56,10 +54,6 @@ public class King extends Piece {
         if (piece != null) {
             if (piece.isWhite() == this.isWhite()) return false;
             if( piece.canMoveTo(destination, board)) {
-                    /*
-                    Need to reposition king before returning true;
-                     */
-                this.positionKingBack(kingOriginalPosition, board, this);
                 return true;
             }
         }
@@ -79,7 +73,6 @@ public class King extends Piece {
                 this.removeKingFromBoard(kingOriginalPosition, board);
             }
             else if (piece.canMoveTo(destination, board)) {
-                this.positionKingBack(kingOriginalPosition, board, this);
                 return true;
             }
         }
@@ -87,6 +80,14 @@ public class King extends Piece {
     }
 
     public boolean isCheckable(Position pos, ChessBoard board) {
+        Position originalKingPosition = this.getPosition();
+        this.removeKingFromBoard(this.getPosition(), board);
+        boolean result =  isCheckableHelper(pos, board);
+        positionKingBack(originalKingPosition, board, this);
+        return result;
+    }
+
+    public boolean isCheckableHelper(Position pos, ChessBoard board) {
 
 
         String position = pos.toString();
@@ -95,7 +96,6 @@ public class King extends Piece {
         char row = position.charAt(1);
 
         Position kingOriginalPosition = this.getPosition();
-        this.removeKingFromBoard(this.getPosition(), board);
 
 
         // Checking same row, columns on the left
@@ -199,6 +199,8 @@ public class King extends Piece {
         }
         this.positionKingBack(kingOriginalPosition, board, this);
         return false;
+
+
     }
 
     public boolean isMate(ChessBoard board) {
@@ -223,12 +225,15 @@ public class King extends Piece {
         positions.add(board.getPosition(String.valueOf((char) (position[0] - 1)) + ((char) (position[1]))));
         positions.add(board.getPosition(String.valueOf((char) (position[0] - 1)) + ((char) (position[1] + 1))));
         positions = positions.stream().filter(Objects::nonNull).collect(Collectors.toList());
+
+
         Predicate<Position> potentialMove = pos -> (pos.getPiece() == null ||
                 (pos.getPiece() != null && pos.getPiece().isWhite() != this.isWhite()));
         positions = positions.stream()
                 .filter(potentialMove)
                 .filter(pos -> !isCheckable(pos, board))
         .collect(Collectors.toList());
+
         return positions;
     }
 
