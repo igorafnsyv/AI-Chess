@@ -16,15 +16,16 @@ public class Player {
         return white;
     }
 
-        public boolean makeMove(String start, String destination, ChessBoard board) {
-            Piece piece = board.getPosition(start).getPiece();
-            //Player can move only its own chess pieces
-            boolean ownPieces = piece.isWhite() == this.white;
-            if (ownPieces) {
-                return board.movePiece(piece, destination);
+    public boolean makeMove(Move move,  ChessBoard board) {
 
-            }
-            return false;
+        Piece piece = board.getPosition(move.getStartPosition().toString()).getPiece();
+        //Player can move only its own chess pieces
+        boolean ownPieces = piece.isWhite() == this.white;
+        if (ownPieces) {
+            return board.movePiece(piece, move.getMoveDestination().toString());
+
+        }
+        return false;
 
     }
 

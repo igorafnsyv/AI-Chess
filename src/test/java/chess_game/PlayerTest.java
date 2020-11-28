@@ -20,7 +20,7 @@ public class PlayerTest {
         Position start = chessBoard.getPosition("C2");
         Piece piece = start.getPiece();
         Position destination = chessBoard.getPosition("C4");
-        assertTrue(player.makeMove(start.toString(), destination.toString(), chessBoard));
+        assertTrue(player.makeMove(new Move(start.toString(), destination.toString()), chessBoard));
         assertSame(destination.getPiece(), piece);
     }
 

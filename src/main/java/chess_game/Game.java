@@ -56,15 +56,15 @@ public class Game {
             boolean correctMoveMade = false;
             while (!correctMoveMade) {
                 System.out.print("Enter move: ");
-                String move = scanner.nextLine();
-                Matcher matcher = moveCommandPattern.matcher(move);
+                String command = scanner.nextLine();
+                Matcher matcher = moveCommandPattern.matcher(command);
                 while (!matcher.matches()) {
                     System.out.println("Invalid Move Format!");
                     System.out.print("Enter move: ");
-                    move = scanner.nextLine();
-                    matcher = moveCommandPattern.matcher(move);
+                    command = scanner.nextLine();
+                    matcher = moveCommandPattern.matcher(command);
                 }
-                String[] positionsArray = move.split("\\s");
+                String[] positionsArray = command.split("\\s");
                 String startPosition = positionsArray[0];
                 String destinationPosition = positionsArray[1];
                 Piece piece = board.getPosition(startPosition).getPiece();
@@ -72,7 +72,8 @@ public class Game {
                     System.out.println("No piece at " + startPosition);
                     continue;
                 }
-                if (currentPlayer.makeMove(startPosition, destinationPosition, board)) {
+                Move move = new Move(startPosition, destinationPosition);
+                if (currentPlayer.makeMove(move, board)) {
                     System.out.println("Move " + piece + " from " + startPosition + " to " + destinationPosition);
                     if (checkMateDetector.isWhiteKingChecked(board) || checkMateDetector.isBlackKingChecked(board)) {
                         List<Position> whiteKingCheckedFromPosition = checkMateDetector.getBlackCheckWhitePositions();

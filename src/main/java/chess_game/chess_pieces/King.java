@@ -1,5 +1,6 @@
 package chess_game.chess_pieces;
 
+import chess_game.CheckMateDetector;
 import chess_game.ChessBoard;
 import chess_game.Position;
 
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 
@@ -24,9 +26,7 @@ public class King extends Piece {
 
     public boolean isChecked(ChessBoard board) {
         Position originalPosition = this.getPosition();
-//        this.removeKingFromBoard(originalPosition, board);
         this.checked = isCheckable(originalPosition, board);
-//        this.positionKingBack(originalPosition, board, this);
         return checked;
     }
 
@@ -87,6 +87,7 @@ public class King extends Piece {
     }
 
     public boolean isCheckable(Position pos, ChessBoard board) {
+
 
         String position = pos.toString();
 
@@ -222,16 +223,12 @@ public class King extends Piece {
         positions.add(board.getPosition(String.valueOf((char) (position[0] - 1)) + ((char) (position[1]))));
         positions.add(board.getPosition(String.valueOf((char) (position[0] - 1)) + ((char) (position[1] + 1))));
         positions = positions.stream().filter(Objects::nonNull).collect(Collectors.toList());
-        Iterator<Position> iterator = positions.iterator();
-        while (iterator.hasNext()) {
-            Position pos = iterator.next();
-            boolean potentialMovePosition = pos.getPiece() == null ||
-                    (pos.getPiece() != null && pos.getPiece().isWhite() != this.isWhite());
-            if (!potentialMovePosition || isCheckable(pos, board)) {
-                // Use iterator, otherwise concurrent modification exception is thrown
-                iterator.remove();
-            }
-        }
+        Predicate<Position> potentialMove = pos -> (pos.getPiece() == null ||
+                (pos.getPiece() != null && pos.getPiece().isWhite() != this.isWhite()));
+        positions = positions.stream()
+                .filter(potentialMove)
+                .filter(pos -> !isCheckable(pos, board))
+        .collect(Collectors.toList());
         return positions;
     }
 

@@ -12,8 +12,8 @@ public class MoveTest {
     public void testMoveSamePieceReturned() {
         Queen queen = new Queen(false);
 
-        Move move = new Move(new Position("A1"), new Position("A2"));
-        assertEquals(new Position("A1"), move.getStartPosition());
+        Move move = new Move("A1", "A2");
+        assertEquals(new Position("A1").toString(), move.getStartPosition());
     }
 
     @Test
@@ -22,7 +22,7 @@ public class MoveTest {
         Position destination = board.getPosition("A4");
         Position start = board.getPosition("A2");
         Piece pawn = board.getPosition("A2").getPiece();
-        Move move = new Move(start, destination);
+        Move move = new Move(start.toString(), destination.toString());
         ChessBoard newBoard = move.getBoardStateAfterMove(board);
         System.out.println(board);
         System.out.println(newBoard);

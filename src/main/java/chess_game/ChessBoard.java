@@ -105,21 +105,25 @@ public class ChessBoard {
     Before the move is made, need to check manually if the move is legal
      */
     public boolean movePiece(Piece piece, String positionStr) {
-        if (piece instanceof King) {
-            if (piece.isWhite()) {
-                whiteKingPosition = piece.getPosition();
-            } else {
-                blackKingPosition = piece.getPosition();
-            }
-        }
         Position position = this.getPosition(positionStr);
         //Cannot capture opponent's king
         boolean kingOnDestinationPosition = position.getPiece() instanceof King;
         if (piece.canMoveTo(position, this) && !kingOnDestinationPosition) {
             piece.moveTo(position);
+            if (piece instanceof King) {
+                resetKingPosition(piece);
+            }
             return true;
         }
         return false;
+    }
+
+    private void resetKingPosition(Piece piece) {
+        if (piece.isWhite()) {
+            whiteKingPosition = piece.getPosition();
+        } else {
+            blackKingPosition = piece.getPosition();
+        }
     }
 
     @Override
