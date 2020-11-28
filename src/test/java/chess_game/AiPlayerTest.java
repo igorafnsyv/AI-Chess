@@ -28,7 +28,6 @@ public class AiPlayerTest {
         board.positionPiece(new Rook(true), "G8");
         AiPlayer player = new AiPlayer(false, "Computer");
         board.setBlackKingPosition(board.getPosition("D8"));
-        System.out.println(player.getLegalMoves(board));
         assertEquals(0, player.getLegalMoves(board).size());
     }
 
@@ -53,7 +52,7 @@ public class AiPlayerTest {
         ChessBoard board = ChessBoard.initializeBoard();
         AiPlayer player = new AiPlayer(false, "Computer");
         List<Move> moves =  player.getLegalMoves(board);
-        int depth = 4;
+        int depth = 5;
         System.out.println(player.findBestMove(moves, board, depth));
 
 

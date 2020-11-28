@@ -89,15 +89,12 @@ public class King extends Piece {
 
     public boolean isCheckableHelper(Position pos, ChessBoard board) {
 
-
         String position = pos.toString();
 
         char column = position.charAt(0);
         char row = position.charAt(1);
 
         Position kingOriginalPosition = this.getPosition();
-
-
         // Checking same row, columns on the left
         for (char currentCol = (char) (column - 1); currentCol >= 'A'; currentCol--) {
             Position currentPosition = board.getPosition("" + currentCol + row);

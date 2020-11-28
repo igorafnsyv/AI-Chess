@@ -47,19 +47,18 @@ public class AiPlayer extends Player {
         Move bestMove = null;
 
         for (Move potentialMove : moves) {
-            long value = max(potentialMove.getBoardStateAfterMove(board), depth);
+            long value = max(potentialMove.getBoardStateAfterMove(board), depth, Long.MIN_VALUE, Long.MAX_VALUE);
             if (value > maxValue) {
                 maxValue = value;
                 bestMove = potentialMove;
             }
 
         }
-        System.out.println(maxValue);
         return bestMove;
     }
 
     // make sure check and checkmate are handled
-    public long max(ChessBoard board, int depth) {
+    public long max(ChessBoard board, int depth, long alpha, long beta) {
         if (depth == 0 ) {
 //            System.out.println(BoardStateEvaluator.evaluateBlackPositions(board) + " black val");
             return BoardStateEvaluator.evaluateBlackPositions(board);
@@ -74,13 +73,17 @@ public class AiPlayer extends Player {
             }
         }
         for (Move potentialMove : whiteLegalMoves) {
-            long value = min(potentialMove.getBoardStateAfterMove(board), depth - 1);
+            long value = min(potentialMove.getBoardStateAfterMove(board), depth - 1, alpha, beta);
             max = Math.max(value, max);
+            if (value >= beta) {
+                return value;
+            }
+            alpha = Math.max(alpha, value);
         }
         return max;
     }
 
-    public long min(ChessBoard board, int depth) {
+    public long min(ChessBoard board, int depth, long alpha, long beta) {
         if (depth == 0) {
 //            System.out.println(BoardStateEvaluator.evaluateWhitePositions(board) + " white value");
             return BoardStateEvaluator.evaluateWhitePositions(board);
@@ -95,14 +98,13 @@ public class AiPlayer extends Player {
             }
         }
         for (Move potentialMove : blackLegalMoves) {
-            if (board.getPosition(potentialMove.getStartPosition()).getPiece() == null) {
-                System.out.println(potentialMove);
-                System.out.println(board.getBlackKingPosition() + " Black king position");
-                System.out.println(board.getBlackKingPosition().getPiece());
-                System.out.println(board);
-            }
-            long value = max(potentialMove.getBoardStateAfterMove(board), depth - 1);
+
+            long value = max(potentialMove.getBoardStateAfterMove(board), depth - 1, alpha, beta);
             min = Math.min(value, min);
+            if (value <= alpha) {
+                return value;
+            }
+            beta = Math.min(beta, value);
         }
         return min;
     }
