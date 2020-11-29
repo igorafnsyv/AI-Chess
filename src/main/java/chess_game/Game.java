@@ -9,12 +9,14 @@ import java.util.regex.Pattern;
 
 public class Game {
 
-    private ChessBoard board;
-    private Player playerWhite;
-    private Player playerBlack;
+    private final ChessBoard board;
+    private final Player playerWhite;
+    private final Player playerBlack;
     private Player currentPlayer;
-    private CheckMateDetector checkMateDetector;
+    private final CheckMateDetector checkMateDetector;
     private final static int MAX_DEPTH = 3;
+    private boolean blackWin;
+    private boolean whiteWin;
 
 
     public Game(Player playerWhite, Player playerBlack) {
@@ -26,7 +28,9 @@ public class Game {
     }
 
     public boolean isGameEnd() {
-        return (checkMateDetector.isBlackKingCheckMate(board) || (checkMateDetector.isWhiteKingCheckMate(board)));
+        whiteWin = checkMateDetector.isBlackKingCheckMate(board);
+        blackWin = checkMateDetector.isWhiteKingCheckMate(board);
+        return blackWin || whiteWin;
 
     }
 
@@ -66,6 +70,7 @@ public class Game {
             this.setCurrentPlayer(getNextPlayer());
 
         }
+        this.printEndGameInformation();
 
     }
 
@@ -135,6 +140,14 @@ public class Game {
             if (!blackKingCheckedFromPosition.isEmpty()) {
                 System.out.println("Black King is checked from: " + blackKingCheckedFromPosition);
             }
+        }
+    }
+
+    private void printEndGameInformation() {
+        if (whiteWin && !blackWin) {
+            System.out.println("White win the game");
+        } else if (blackWin && !whiteWin) {
+            System.out.println("Black win the game");
         }
     }
 
