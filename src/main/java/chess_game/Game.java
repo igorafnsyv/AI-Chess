@@ -14,7 +14,7 @@ public class Game {
     private final Player playerBlack;
     private Player currentPlayer;
     private final CheckMateDetector checkMateDetector;
-    private final static int MAX_DEPTH = 3;
+    private final static int MAX_DEPTH = 5;
     private boolean blackWin;
     private boolean whiteWin;
 
@@ -97,7 +97,6 @@ public class Game {
             Move move = new Move(startPosition, destinationPosition);
             ChessBoard boardCopy = move.getBoardStateAfterMove(board);
             boolean whiteKingChecked = checkMateDetector.isWhiteKingChecked(boardCopy);
-//            boolean whiteKingChecked = false;
             if (whiteKingChecked) {
                 System.out.println("White King will be checked");
                 this.printMoveInformation(move, false);

@@ -41,7 +41,7 @@ public class CheckMateDetector {
     /*
     Mate on a king happens when
     King cannot make a legal move
-    A piece cannot be placed between King and checking piece -> not implemented yet
+    A piece cannot be placed between King and checking piece
     A piece which checked King cannot be attacked
      */
     private boolean isMateOnWhiteKing(ChessBoard board) {

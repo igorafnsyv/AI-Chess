@@ -23,17 +23,15 @@ public class AiPlayer extends Player {
         Idea behind this method:
         Collect all legal moves AI player can perform and filter out moves which will put Black King in check
         As according to chess rules, when a King is checked, the next move must cancel the check.
-
-        In case no legal moves, the game ends?
-         */
+    */
     public List<Move> getLegalMoves(ChessBoard board) {
         List<Move> moves = new LinkedList<>();
+        CheckMateDetector detector = new CheckMateDetector();
         for (Piece piece : board.getBlackPieces()) {
             List<Position> legalPositions = piece.getLegalMovePositions(board);
             for (Position potentialPosition : legalPositions) {
                 Move potentialMove = new Move(piece.getPosition().toString(), potentialPosition.toString());
                 ChessBoard boardAfterMove = potentialMove.getBoardStateAfterMove(board);
-                CheckMateDetector detector = new CheckMateDetector();
                 if (!detector.isBlackKingChecked(boardAfterMove)) {
                     moves.add(potentialMove);
                 }
@@ -59,20 +57,12 @@ public class AiPlayer extends Player {
         return bestMove;
     }
 
-    // make sure check and checkmate are handled
-    public long max(ChessBoard board, int depth, long alpha, long beta) {
+    private long max(ChessBoard board, int depth, long alpha, long beta) {
         if (depth == 0) {
             return BoardStateEvaluator.evaluateBlackPositions(board);
         }
         long max = Long.MIN_VALUE;
-        List<Move> whiteLegalMoves = new LinkedList<>();
-        for (Piece whitePiece : board.getWhitePieces()) {
-            List<Position> legalMovePositions = whitePiece.getLegalMovePositions(board);
-            for (Position potentialPosition : legalMovePositions) {
-                Move potentialMove = new Move(whitePiece.getPosition().toString(), potentialPosition.toString());
-                whiteLegalMoves.add(potentialMove);
-            }
-        }
+        List<Move> whiteLegalMoves = legalMoves(board.getWhitePieces(), board);
         for (Move potentialMove : whiteLegalMoves) {
             long value = min(potentialMove.getBoardStateAfterMove(board), depth - 1, alpha, beta);
             max = Math.max(value, max);
@@ -84,19 +74,24 @@ public class AiPlayer extends Player {
         return max;
     }
 
-    public long min(ChessBoard board, int depth, long alpha, long beta) {
+    private List<Move> legalMoves(List<Piece> pieces, ChessBoard board) {
+        List<Move> legalMoves = new LinkedList<>();
+        for (Piece piece : pieces) {
+            List<Position> legalMovePositions = piece.getLegalMovePositions(board);
+            for (Position potentialPosition : legalMovePositions) {
+                Move potentialMove = new Move(piece.getPosition().toString(), potentialPosition.toString());
+                legalMoves.add(potentialMove);
+            }
+        }
+        return legalMoves;
+    }
+
+    private long min(ChessBoard board, int depth, long alpha, long beta) {
         if (depth == 0) {
             return -BoardStateEvaluator.evaluateWhitePositions(board);
         }
         long min = Long.MAX_VALUE;
-        List<Move> blackLegalMoves = new LinkedList<>();
-        for (Piece blackPiece : board.getBlackPieces()) {
-            List<Position> legalMovePositions = blackPiece.getLegalMovePositions(board);
-            for (Position potentialMovePosition : legalMovePositions) {
-                Move potentialMove = new Move(blackPiece.getPosition().toString(), potentialMovePosition.toString());
-                blackLegalMoves.add(potentialMove);
-            }
-        }
+        List<Move> blackLegalMoves = legalMoves(board.getBlackPieces(), board);
         for (Move potentialMove : blackLegalMoves) {
             long value = max(potentialMove.getBoardStateAfterMove(board), depth - 1, alpha, beta);
             min = Math.min(value, min);

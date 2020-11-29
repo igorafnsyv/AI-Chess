@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 
 public class ChessBoard {
     private Map<String, Position> board;
+
+    /*
+    Store Kings' positions to avoid redundant searches after each move
+     */
     private Position whiteKingPosition;
     private Position blackKingPosition;
 
