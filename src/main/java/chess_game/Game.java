@@ -109,11 +109,13 @@ public class Game {
     private void printMoveInformation(Move move, boolean correctMoveMade) {
         String start = move.getStartPosition();
         String destination = move.getMoveDestination();
-        Piece piece = board.getPosition(destination).getPiece();
+
         if (correctMoveMade) {
+            Piece piece = board.getPosition(destination).getPiece();
             System.out.println("Move " +piece + " from " + start + " to " + destination);
             this.printCheckInformation();
         } else {
+            Piece piece = board.getPosition(start).getPiece();
             System.out.println("Illegal Move for " + piece + " from " + start + " to " + destination);
         }
     }
