@@ -4,8 +4,8 @@ import chess_game.chess_pieces.Piece;
 
 public class Player {
 
-    private boolean white;
-    private String name;
+    private final boolean white;
+    private final String name;
 
     public Player(boolean white, String name) {
         this.white = white;
@@ -22,11 +22,11 @@ public class Player {
 
     public boolean makeMove(Move move,  ChessBoard board) {
 
-        Piece piece = board.getPosition(move.getStartPosition().toString()).getPiece();
+        Piece piece = board.getPosition(move.getStartPosition()).getPiece();
         //Player can move only its own chess pieces
         boolean ownPieces = piece.isWhite() == this.white;
         if (ownPieces) {
-            return board.movePiece(piece, move.getMoveDestination().toString());
+            return board.movePiece(piece, move.getMoveDestination());
 
         }
         return false;
