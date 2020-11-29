@@ -62,7 +62,7 @@ public class AiPlayer extends Player {
             return BoardStateEvaluator.evaluateBlackPositions(board);
         }
         long max = Long.MIN_VALUE;
-        List<Move> whiteLegalMoves = legalMoves(board.getWhitePieces(), board);
+        List<Move> whiteLegalMoves = legalMovesForPieceList(board.getWhitePieces(), board);
         for (Move potentialMove : whiteLegalMoves) {
             long value = min(potentialMove.getBoardStateAfterMove(board), depth - 1, alpha, beta);
             max = Math.max(value, max);
@@ -74,7 +74,7 @@ public class AiPlayer extends Player {
         return max;
     }
 
-    private List<Move> legalMoves(List<Piece> pieces, ChessBoard board) {
+    private List<Move> legalMovesForPieceList(List<Piece> pieces, ChessBoard board) {
         List<Move> legalMoves = new LinkedList<>();
         for (Piece piece : pieces) {
             List<Position> legalMovePositions = piece.getLegalMovePositions(board);
@@ -91,7 +91,7 @@ public class AiPlayer extends Player {
             return -BoardStateEvaluator.evaluateWhitePositions(board);
         }
         long min = Long.MAX_VALUE;
-        List<Move> blackLegalMoves = legalMoves(board.getBlackPieces(), board);
+        List<Move> blackLegalMoves = legalMovesForPieceList(board.getBlackPieces(), board);
         for (Move potentialMove : blackLegalMoves) {
             long value = max(potentialMove.getBoardStateAfterMove(board), depth - 1, alpha, beta);
             min = Math.min(value, min);
