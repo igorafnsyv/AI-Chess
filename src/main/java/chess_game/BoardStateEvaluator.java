@@ -66,11 +66,15 @@ public class BoardStateEvaluator {
     }
 
     public static long evaluateWhitePositions(ChessBoard board) {
-        return Math.max(whitePieceTotalValue(board), Math.max(whitePiecePossibleMoveCount(board), whiteCheckBlackKing(board)));
+        return Math.max(whitePieceTotalValue(board),
+                Math.max(whitePiecePossibleMoveCount(board),
+                        Math.max(whiteCheckBlackKing(board), whiteCheckmateBlackKing(board))));
     }
 
     public static long evaluateBlackPositions(ChessBoard board) {
-        return Math.max(blackPieceTotalValue(board), Math.max(blackPiecePossibleMoveCount(board), blackCheckWhiteKing(board)));
+        return Math.max(blackPieceTotalValue(board),
+                Math.max(blackPiecePossibleMoveCount(board),
+                        Math.max(blackCheckWhiteKing(board), blackCheckWhiteKing(board))));
     }
 
 

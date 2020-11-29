@@ -14,7 +14,7 @@ public class Game {
     private final Player playerBlack;
     private Player currentPlayer;
     private final CheckMateDetector checkMateDetector;
-    private final static int MAX_DEPTH = 3;
+    private final static int MAX_DEPTH = 5;
     private boolean blackWin;
     private boolean whiteWin;
 
